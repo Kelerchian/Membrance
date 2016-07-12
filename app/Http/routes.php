@@ -21,6 +21,11 @@ Route::get('/kk',[
   'uses'=>'KKController@index'
 ]);
 
+Route::get('/kk/list',[
+  'as'=>'kk.list',
+  'uses'=>'KKController@list'
+]);
+
 
 /*
 Route::get('/storetest',function(){
