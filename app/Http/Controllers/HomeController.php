@@ -25,9 +25,8 @@ class HomeController extends Controller
 
     public function gettest(){
       $whereClauses = array();
-      $whereClauses[] = ['tanggal lahir','>','2312-11-31'];
+      $whereClauses[] = ['tanggal lahir','>=','2312-12-31'];
       $ret = MDb::getTypeWhere('primer',$whereClauses);
-      //$ret = MDb::get();
       echo "<pre>".json_encode($ret,JSON_PRETTY_PRINT)."</pre>";
       dd($ret);
     }

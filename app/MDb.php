@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use App\MObjectCollection;
 use App\MAttribute;
 use App\MObject;
 use DB;
@@ -26,12 +27,15 @@ class MDb extends Model
       }
       return $object;
     }
-
-    private static function mSingleJoin(&$single){
+    private static function joinAttribute(&$single,$dataAttrs){
       $dataString = '';
-      foreach($single->attr as $dataKey=>$dataVal){
-        $dataString.=$single->attr[$dataKey]->data;
+      foreach($dataAttrs as $dataKey=>$dataVal){
+        $dataString.=$dataAttrs[$dataKey]->data;
       }
+      return $dataString;
+    }
+    private static function mSingleJoin(&$single){
+      $dataString = MDb::joinAttribute($single,$single->attr);
       $single->data = json_decode($dataString);
       return $single;
     }
@@ -85,22 +89,40 @@ class MDb extends Model
       $ret = MObject::with('attr')->get();
       return MDb::mJoin($ret);
     }
-    public static function getWhere($whereClauses){
-      $ret = MDb::get();
-      return MDb::where($ret,$whereClauses);
-    }
     public static function getType($type){
       $ret = MObject::with('attr')->where('type',$type)->get();
       return MDb::mJoin($ret);
     }
-    public static function getTypeWhere($type,$where){
+    public static function getName($name){
+      $ret = MDB::with('attr')->where('name',$name)->get();
+      return MDb::mJoin($ret);
+    }
+    public static function getWhere($whereClauses){
+      $ret = MDb::get();
+      return MDb::where($ret,$whereClauses);
+    }
+    public static function getTypeWhere($type,$whereClauses){
       $ret = MDb::getType($type);
       return MDb::where($ret,$whereClauses);
     }
     public static function getFirstById($id){
-        $ret = MObject::with('attr')
-        ->where('id',$id)->first();
-        return MDb::mSingleJoin($ret);
+      $ret = MObject::with('attr')
+      ->where('id',$id)->first();
+      return MDb::mSingleJoin($ret);
+    }
+    private static function getSingleData(&$object){
+      $ret = MAttribute::selectRaw("GROUP_CONCAT(data SEPARATOR '') as data")->where('m_object_id',$object->id)->first();
+      $object->data = json_decode($ret->data);
+      return $object;
+    }
+    public static function getData(&$object){
+      if(isset($object->name)){
+        return MDb::getSingleData($object);
+      }
+      foreach ($object as $key => $value) {
+        $object[$key] = MDb::getSingleData($object[$key]);
+      }
+      return $object;
     }
     /*
     public static function getFirstWhere($where){
@@ -343,7 +365,7 @@ class MDb extends Model
         return MDb::singleWhere($objects, $whereClause);
       }
       else{
-        $newCollection = array();
+        $newCollection = new MObjectCollection();
         foreach($objects as $key=>$value){
           if(MDb::singleWhere($objects[$key], $whereClause)){
             $newCollection[]=$objects[$key];
