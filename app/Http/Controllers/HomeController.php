@@ -13,7 +13,7 @@ use App\MDb;
 class HomeController extends Controller
 {
   public function index(){
-    
+    return view('index');
   }
     public function storetest(Request $request){
       $input = $request->input();

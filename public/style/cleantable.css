@@ -1,0 +1,11 @@
+table.clean-table{
+
+}
+
+td,th{
+  border: 1px solid #555;
+}
+
+table.clean-table th{
+  padding: 4px 10px;
+}

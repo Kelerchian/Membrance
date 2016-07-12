@@ -1,0 +1,81 @@
+
+/*
+Section-header
+*/
+*{
+  font-family: OpenSans;
+}
+
+#repo{
+  display: none;
+}
+
+@keyframes fadein {
+  0%{
+    opacity: 0;
+  }
+  100%{
+    opacity: 1;
+  }
+}
+
+html, body{
+  min-height: 100%;
+}
+
+body{
+  background: linear-gradient(rgba(0,0,0,0.87),rgba(0,0,0,0.87));
+  color: #555 ;
+}
+
+.content{
+  animation: fadein 0.8s ease;
+}
+
+.important{
+  color: #bbb;
+}
+
+.app-header{
+  height: auto;
+  background-image: linear-gradient(#282828,#191919);
+  color: #ccc;
+  font-size: 1.1em;
+  padding-top: 15px;
+  padding-bottom: 10px;
+}
+
+.app-header>a{
+  color: #ccc;
+  text-decoration: none;
+}
+
+.app-title{
+  font-weight: 500;
+}
+
+.app-header>nav{
+  height: 100%;
+  margin-top: auto;
+}
+
+.app-header>nav:after{
+  display: block;
+  content: '';
+  clear: both;
+}
+
+.app-header>nav>a{
+  float: left;
+  padding: 9px 18px;
+  display: block;
+  height: 100%;
+  vertical-align: middle;
+  color: #ccc;
+}
+.app-header>nav>a.active,
+.app-header>nav>a:active,
+.app-header>nav>a:hover{
+  text-decoration: none;
+  color: #eee;
+}

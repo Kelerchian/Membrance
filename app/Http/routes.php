@@ -11,10 +11,18 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/',[
+  'as'=>'index',
+  'uses'=>'HomeController@index'
+]);
 
+Route::get('/kk',[
+  'as'=>'kk.index',
+  'uses'=>'KKController@index'
+]);
+
+
+/*
 Route::get('/storetest',function(){
     return view('storetest');
 });
@@ -22,3 +30,4 @@ Route::get('/storetest',function(){
 Route::get('/gettest','HomeController@gettest');
 
 Route::post('/storetest','HomeController@storetest');
+*/
