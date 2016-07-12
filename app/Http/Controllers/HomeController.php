@@ -12,6 +12,9 @@ use App\MDb;
 
 class HomeController extends Controller
 {
+  public function index(){
+    
+  }
     public function storetest(Request $request){
       $input = $request->input();
 
