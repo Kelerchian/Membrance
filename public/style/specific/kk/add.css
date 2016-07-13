@@ -1,0 +1,15 @@
+input{
+  width: 100%;
+}
+table.clean-table th{
+  white-space: nowrap;
+}
+table.clean-table td{
+  padding: 3px;
+}
+table.clean-table button{
+  white-space: nowrap;
+}
+table.clean-table input{
+  min-width: 200px;
+}

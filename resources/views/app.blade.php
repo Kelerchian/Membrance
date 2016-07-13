@@ -2,6 +2,7 @@
 <html>
 <head>
   @yield('head.before')
+  <meta name="csrf_token" content="{{ csrf_token() }}">
   <link rel="stylesheet" href="{{ url('framework/bootstrap/css/bootstrap.min.css') }}"/>
   <link rel="stylesheet" href="{{ url('style/font.css') }}" />
   <link rel="stylesheet" href="{{ url('style/app.css') }}" />
@@ -22,7 +23,7 @@
           </div>
         </a>
         <nav class="col-md-8">
-          <a class="@yield('nav_kartu_keluarga')" href="#">Kartu Keluarga</a>
+          <a href="{{ route('kk.index') }}" class="@yield('nav_kartu_keluarga')">Kartu Keluarga</a>
           <a class="@yield('nav_penduduk')" href="#">Penduduk</a>
           <a class="@yield('nav_rt_rws')" href="#">RT/RW</a>
         </nav>

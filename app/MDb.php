@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use App\MObjectCollection;
 use App\MAttribute;
 use App\MObject;
+use App\MRelation;
 use DB;
 class MDb extends Model
 {
@@ -35,6 +36,9 @@ class MDb extends Model
       return $dataString;
     }
     private static function mSingleJoin(&$single){
+      if($single == null){
+        return null;
+      }
       $dataString = MDb::joinAttribute($single,$single->attr);
       $single->data = json_decode($dataString);
       return $single;
@@ -83,6 +87,26 @@ class MDb extends Model
       }
     }
     */
+    public static function purgeRelation($name,$from,$to){
+      MRelation::where('name',$name)->where('from',$from)->where('to',$to)->delete();
+      return true;
+    }
+    public static function purgeRelationFrom($name,$from){
+      MRelation::where('name',$name)->where('from',$from)->delete();
+      return true;
+    }
+    public static function purgeRelationTo($name,$to){
+      MRelation::where('name',$name)->where('to',$to)->delete();
+      return true;
+    }
+    public static function createRelation($name,$to,$from){
+      $relation = new MRelation();
+      $relation->name = $name;
+      $relation->to = $to;
+      $relation->from = $from;
+      $relation->save();
+      return $relation->id;
+    }
 
     //GETTER
     public static function get(){
@@ -94,7 +118,11 @@ class MDb extends Model
       return MDb::mJoin($ret);
     }
     public static function getName($name){
-      $ret = MDB::with('attr')->where('name',$name)->get();
+      $ret = MDb::with('attr')->where('name',$name)->get();
+      return MDb::mJoin($ret);
+    }
+    public static function getTypeName($type,$name){
+      $ret = MObject::with('attr')->where('type',$type)->where('name',$name)->get();
       return MDb::mJoin($ret);
     }
     public static function getWhere($whereClauses){
@@ -108,6 +136,10 @@ class MDb extends Model
     public static function getFirstById($id){
       $ret = MObject::with('attr')
       ->where('id',$id)->first();
+      return MDb::mSingleJoin($ret);
+    }
+    public static function getFirstTypeName($type,$name){
+      $ret = MObject::with('attr')->where('type',$type)->where('name',$name)->first();
       return MDb::mSingleJoin($ret);
     }
     private static function getSingleData(&$object){
@@ -163,19 +195,18 @@ class MDb extends Model
     }
     public static function remove($id){
       try{
-        DB::beginTransaction();
+
         MDb::removeAttr($id);
         MObject::where('id',$id)->delete();
-        DB::commit();
         return true;
       }catch(\Exception $e){
-        DB::rollBack();
+
         throw $e;
       }
     }
     public static function removeWhere($whereClauses){
       try{
-        DB::beginTransaction();
+
 
         $objects = MDb::getWhere($whereClauses);
         $ids = array();
@@ -184,10 +215,9 @@ class MDb extends Model
         }
         MDb::removeBulk($ids);
 
-        DB::commit();
         return true;
       }catch(\Exception $e){
-        DB::rollBack();
+
         throw $e;
       }
     }
@@ -218,9 +248,19 @@ class MDb extends Model
         throw $e;
       }
     }
-    public static function insert(&$type, &$name, &$data){
+    public static function insertObject(&$object){
+      try{
+          $name = $object->name;
+          $type = $object->type;
+          $data = $object->data;
+          return MDB::insert($type,$name,$data);
+      }catch(\Exception $e){
+          throw $e;
+      }
+    }
+    public static function insert($type, &$name, &$data){
         try{
-            DB::beginTransaction();
+
             if($name == null){
                 throw new \Exception('Name is empty');
             }
@@ -237,16 +277,15 @@ class MDb extends Model
 
             $id = $mObject->id;
             MDb::insertAttr($id,json_encode($data));
-            DB::commit();
-            return true;
+            return $id;
         }catch(\Exception $e){
-            DB::rollBack();
+
             throw $e;
         }
     }
     public static function edit(&$object){
         try{
-            DB::beginTransaction();
+
             $name = $object->name;
             $type = $object->type;
             $data = $object->data;
@@ -266,10 +305,9 @@ class MDb extends Model
 
             MDb::removeAttr($mObject->id);
             MDb::insertAttr($id,json_encode($data));
-            DB::commit();
             return true;
         }catch(\Exception $e){
-            DB::rollBack();
+
             throw $e;
         }
     }

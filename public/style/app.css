@@ -24,22 +24,83 @@ html, body{
 }
 
 body{
-  background: linear-gradient(rgba(0,0,0,0.87),rgba(0,0,0,0.87));
-  color: #666 ;
+  background: #FFFDED;
+  color: #999 ;
+}
+
+form{
+  display: block;
+  border: 4px dashed #666;
+  padding: 15px;
+  border-radius: 30px;
+}
+
+form button,input{
+  border-radius: 15px;
+}
+
+input[type='number'],
+input[type='date'],
+input[type='text'],
+input[type='email'],
+input[type='password'],
+select
+{
+  padding: 10px 15px;
+  background: none;
+  border: none;
+  box-shadow: inset 0 0 15px #665D14;
+  color: #333;
+}
+a{
+  font-style: italic;
+  color: #7e7f3b;
+}
+a:hover,
+a:active{
+  color: #E8DB6F;
+  text-decoration: none;
+}
+button{
+  font-weight: bold;
+  background: #7e7f3b;
+  color: #FFFDED;
+  border: none;
+  padding: 10px 15px;
+}
+button:hover{
+  background: #A2A34C;
+}
+
+.mini-input input[type='number'],
+.mini-input input[type='date'],
+.mini-input input[type='text'],
+.mini-input input[type='email'],
+.mini-input input[type='password'],
+.mini-input select,
+.mini-input button{
+  padding: 5px 7px;
+}
+
+.overflow-x{
+    overflow-x: scroll;
 }
 
 .content{
   animation: fadein 0.8s ease;
+  padding-bottom: 150px;
 }
 
 .important{
-  color: #bbb;
+  color: #333;
 }
 
 #globalmessage>.alert{
   padding: 0px 15px;
   border-radius: 0;
   margin: 0;
+  border-style: dashed;
+  border-width: 2px;
 }
 
 .alert-success{
@@ -52,11 +113,11 @@ body{
 
 }
 .alert-danger{
-  
+
 }
 
 #globalmessage>.alert:first-child{
-  margin-top: 15px;
+  margin-top: 20px;
   border-top-left-radius: 4px;
   border-top-right-radius: 4px;
 }
@@ -64,20 +125,21 @@ body{
 #globalmessage>.alert:last-child{
   border-bottom-left-radius: 4px;
   border-bottom-right-radius: 4px;
-  margin-bottom: 15px;
+  margin-bottom: 5px;
 }
 
 .app-header{
   height: auto;
-  background-image: linear-gradient(#282828,#191919);
-  color: #ccc;
+  background: #FFFDED;
+  color: #111;
   font-size: 1.1em;
   padding-top: 15px;
   padding-bottom: 10px;
+  border-bottom: 2px solid black;
 }
 
 .app-header>a{
-  color: #ccc;
+  color: #111;
   text-decoration: none;
 }
 
@@ -102,11 +164,11 @@ body{
   display: block;
   height: 100%;
   vertical-align: middle;
-  color: #ccc;
+  color: #7e7f3b;
 }
 .app-header>nav>a.active,
 .app-header>nav>a:active,
 .app-header>nav>a:hover{
   text-decoration: none;
-  color: #eee;
+  color: #111;
 }

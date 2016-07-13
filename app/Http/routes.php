@@ -26,6 +26,16 @@ Route::get('/kk/list',[
   'uses'=>'KKController@list'
 ]);
 
+Route::get('/kk/add',[
+  'as'=>'kk.add',
+  'uses'=>'KKController@add'
+]);
+
+Route::post('/kk/add',[
+  'as'=>'kk.add',
+  'uses'=>'KKController@store'
+]);
+
 
 /*
 Route::get('/storetest',function(){

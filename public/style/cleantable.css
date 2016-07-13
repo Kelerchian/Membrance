@@ -1,11 +1,48 @@
 table.clean-table{
-
+  min-width: 100%;
+  margin-bottom: 1px;
 }
 
-th{
-  border: 1px solid #555;
+table.clean-table th,
+table.clean-table td{
+  border: 1px solid #888;
 }
 
 table.clean-table th{
+  padding: 9px 19px;
+}
+
+table.clean-table tr>th.buttons{
+  border-style: dashed;
+  min-height: 7px;
+  height: auto;
+  padding: 0;
+}
+table.clean-table tr>th.buttons.float-right>*,
+table.clean-table tr>th.buttons.float-left>*{
+  padding: 3px;
+  display: inline-block;
+  height: 100%;
+}
+table.clean-table tr>th.buttons.float-right:after,
+table.clean-table tr>th.buttons.float-left:after{
+  display: inline-block;
+  content: '';
+  clear: both;
+}
+
+table.clean-table tr>th.buttons.float-right>*{
+  float:right;
+}
+table.clean-table tr>th.buttons.float-left>*{
+  float:left;
+}
+
+table.clean-table td{
   padding: 7px 19px;
+}
+
+table.clean-table tbody>tr:nth-child(odd){
+}
+table.clean-table tbody>tr:nth-child(even){
 }

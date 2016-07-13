@@ -1,6 +1,11 @@
 AppGlobal = {}
 AppGlobal.debugMode = true
 AppGlobal.initialize = function(page){
+  $.ajaxSetup({
+  	headers: {
+  		'X-CSRF-TOKEN':$('meta[name="csrf_token"]').attr('content')
+  	}
+  })
   page.repo = {}
   var repo = $('#repo');
   if(repo.length>0){
@@ -58,21 +63,35 @@ AppGlobal.postMessage = function(type,message){
   $('#globalmessage').append(AppGlobal.template(type,message));
 }
 AppGlobal.ajax = {}
-AppGlobal.ajax.jsonError = function(data){
+AppGlobal.ajax.ajaxSuccess = function(data){
+  AppGlobal.postMessage('success',data.message)
+}
+AppGlobal.ajax.ajaxError = function(data){
   AppGlobal.postMessage('warning',data.message)
 }
 AppGlobal.ajax.html = function(object){
+  if(typeof object.data == 'object'){
+    object.data.csrf_token = $('meta[name="csrf_token"]').attr('content');
+  }
   $.ajax({
     url: object.url,
     data: object.data,
     method: object.method,
     success: function(data){
-      if(data.success == 1){
-        console.info(data)
+      if(AppGlobal.debugMode){
+        if(typeof data == 'string'){
+          AppGlobal.postMessage('info',data)
+        }
+        else{
+          console.info(data)
+        }
+      }
+      if(data.status == 1){
         object.success(data)
       }else{
         if(AppGlobal.debugMode){
-          console.warn(e)
+          AppGlobal.postMessage('danger',data.stackTrace)
+          console.warn(data)
         }
         if(object.error){
           object.error(data)
@@ -82,24 +101,38 @@ AppGlobal.ajax.html = function(object){
     error: function(e){
       if(AppGlobal.debugMode){
         console.error(e)
+        AppGlobal.postMessage('danger',e.responseText)
       }
-      AppGlobal.postMessage('error',e.message)
+      else{
+        AppGLobal.postMessage('danger','Terjadi kesalahan pada sistem')
+      }
     }
   })
 }
 AppGlobal.ajax.json = function(object){
+  if(typeof object.data == 'object'){
+    object.data.csrf_token = $('meta[name="csrf_token"]').attr('content');
+  }
   $.ajax({
     url: object.url,
     data: object.data,
     method: object.method,
     success: function(data){
+      if(AppGlobal.debugMode){
+        if(typeof data == 'string'){
+          AppGlobal.postMessage('info',data)
+        }
+        else{
+          console.info(data)
+        }
+      }
       data = JSON.parse(data)
-      if(data.success == 1){
-        console.info(data)
+      if(data.status == 1){
         object.success(data)
       }else{
         if(AppGlobal.debugMode){
-          console.warn(e)
+          AppGlobal.postMessage('danger',data.stackTrace)
+          console.warn(data)
         }
         if(object.error){
           object.error(data)
@@ -109,8 +142,11 @@ AppGlobal.ajax.json = function(object){
     error: function(e){
       if(AppGlobal.debugMode){
         console.error(e)
+        AppGlobal.postMessage('danger',e.responseText)
       }
-      AppGlobal.postMessage('error',e.message)
+      else{
+        AppGLobal.postMessage('danger','Terjadi kesalahan pada sistem')
+      }
     }
   })
 }

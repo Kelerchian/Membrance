@@ -1,4 +1,7 @@
 @extends('app')
+@section('nav_kartu_keluarga')
+active
+@endsection
 @section('head.after')
   <link rel="stylesheet" href="{{ url('style/cleantable.css') }}"/>
 @endsection
@@ -10,6 +13,12 @@
       <table class='clean-table important' vile-weave='table'>
         <thead>
           <tr>
+            <th colspan="4" class='buttons float-right'>
+              <a href="{{ route('kk.add') }}"><span class='glyphicon glyphicon-plus'></span> Daftarkan Kartu Keluarga
+              </a>
+            </th>
+          </tr>
+          <tr>
             <th>
               No
             </th>
@@ -18,6 +27,9 @@
             </th>
             <th>
               Kepala Keluarga
+            </th>
+            <th>
+              Action
             </th>
           </tr>
         </thead>
@@ -57,11 +69,12 @@
           page.e.make('td',i+1)
           +page.e.make('td',kk[i].nama)
           +page.e.make('td',kk[i].data.nama_kepala_keluarga)
+          +page.e.make('td','')
         ))
       }
       if(kk.length == 0){
         body+=page.e.make('tr',
-          (page.e.make('td',{colspan:3,class:'text-center'},'belum ada kartu keluarga yang terdaftar'))
+          (page.e.make('td',{colspan:4,class:'text-center'},'belum ada kartu keluarga yang terdaftar'))
         )
       }
       page.table.find('tbody').html(body)
