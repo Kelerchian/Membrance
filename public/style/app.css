@@ -25,12 +25,12 @@ html, body{
 
 body{
   background: #FFFDED;
-  color: #999 ;
+  color: black ;
 }
 
 form{
   display: block;
-  border: 4px dashed #666;
+  border: 2px dashed #666;
   padding: 15px;
   border-radius: 30px;
 }
@@ -48,28 +48,27 @@ select
 {
   padding: 10px 15px;
   background: none;
-  border: none;
-  box-shadow: inset 0 0 15px #665D14;
+  border: 3px solid rgba(0,0,0,0.2);
   color: #333;
 }
 a{
   font-style: italic;
-  color: #7e7f3b;
+  color: #3531c2;
 }
 a:hover,
 a:active{
-  color: #E8DB6F;
+  color: #5d8fec;
   text-decoration: none;
 }
 button{
   font-weight: bold;
-  background: #7e7f3b;
+  background: #3531c2;
   color: #FFFDED;
   border: none;
   padding: 10px 15px;
 }
 button:hover{
-  background: #A2A34C;
+  background: #5d8fec;
 }
 
 .mini-input input[type='number'],

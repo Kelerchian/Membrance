@@ -18,7 +18,7 @@ active
         <div class="row form-group">
           <div class='col-sm-12'>
             <label>Nomor Kartu Keluarga</label>
-            <input type='text' placeholder="Nomor" name='nomor' required/>
+            <input type='text' name='nomor' pattern="\d*" required/>
           </div>
         </div>
 
@@ -77,7 +77,7 @@ active
             <div class='row form-group'>
               <div class='col-sm-12'>
                 <label>Kode Pos</label>
-                <input type='text' name='kode_pos'/>
+                <input type='text' name='kode_pos' pattern="\d*"/>
               </div>
             </div>
             <div class='row form-group'>
