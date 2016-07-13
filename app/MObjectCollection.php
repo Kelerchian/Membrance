@@ -2,7 +2,7 @@
 
 namespace App;
 
-use Illuminate\Support\Collection;
+use Illuminate\Database\Eloquent\Collection;
 use App\MDb;
 
 class MObjectCollection extends Collection

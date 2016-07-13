@@ -21,6 +21,31 @@ class KKController extends Controller
       return $ret;
     });
   }
+  public function edit($id){
+    $kk = MDb::getFirstById($id);
+    $penduduk = MDb::getTos('kk-penduduk',$id);
+    return view ('kk.edit',[
+      'kk'=>$kk,
+      'penduduk'=>$penduduk
+    ]);
+  }
+  public function update(Request $request, $id){
+    $input = $request->input();
+    $kk = json_decode($input['kk']);
+    $kk->type = 'kk';
+    $kk->id = $id;
+    $penduduk = json_decode($input['penduduk']);
+    return Protocol::transaction(function()use($kk,$penduduk){
+      $data = array();
+      foreach ($penduduk as $key => $value) {
+        $penduduk[$key]->type='penduduk';
+      }
+      MDb::edit($kk);
+      MDb::updateTos('kk-penduduk',$kk,$penduduk);
+      $data['message'] = "Kartu Keluarga telah diperbarui";
+      return $data;
+    });
+  }
   public function add(Request $request){
     return view('kk.add');
   }

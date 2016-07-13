@@ -66,8 +66,25 @@ class MDb extends Model
         $attribute = $singleWhere[0];
         $value = $singleWhere[1];
       }
+      */
 
+      public static function extractObjectIds($collection){
+        $collectionIds = array();
+        $nonIds = array();
+        foreach($collection as $key=>$value){
+          if(isset($collection[$key]->id)){
+            $collectionIds[$collection[$key]->id] = $collection[$key];
+          }else{
+            $nonIds[]=$collection[$key];
+          }
+        }
+        $ret = new \StdClass();
+        $ret->ids = $collectionIds;
+        $ret->nonIds = $nonIds;
+        return $ret;
+      }
 
+      /*
       $whereClause = '';
       if($relation=='=' || trim(strtolower($relation))=='is' ){
         $whereClause = '%"'.MDb::escape($attribute).'":"'.MDb::escape($value).'"%';
@@ -87,6 +104,14 @@ class MDb extends Model
       }
     }
     */
+    public static function getTos($name,$from){
+      $rel = MRelation::with('tos.attr')->where('name',$name)->where('from',$from)->get();
+      $ret = new MObjectCollection();
+      foreach ($rel as $key => $value) {
+        $ret->push($rel[$key]->tos[0]);
+      }
+      return MDb::mJoin($ret);
+    }
     public static function purgeRelation($name,$from,$to){
       MRelation::where('name',$name)->where('from',$from)->where('to',$to)->delete();
       return true;
@@ -99,7 +124,7 @@ class MDb extends Model
       MRelation::where('name',$name)->where('to',$to)->delete();
       return true;
     }
-    public static function createRelation($name,$to,$from){
+    public static function createRelation($name,$from,$to){
       $relation = new MRelation();
       $relation->name = $name;
       $relation->to = $to;
@@ -134,8 +159,7 @@ class MDb extends Model
       return MDb::where($ret,$whereClauses);
     }
     public static function getFirstById($id){
-      $ret = MObject::with('attr')
-      ->where('id',$id)->first();
+      $ret = MObject::with('attr')->where('id',$id)->first();
       return MDb::mSingleJoin($ret);
     }
     public static function getFirstTypeName($type,$name){
@@ -198,7 +222,7 @@ class MDb extends Model
 
         MDb::removeAttr($id);
         MObject::where('id',$id)->delete();
-        return true;
+        return $id;
       }catch(\Exception $e){
 
         throw $e;
@@ -260,7 +284,6 @@ class MDb extends Model
     }
     public static function insert($type, &$name, &$data){
         try{
-
             if($name == null){
                 throw new \Exception('Name is empty');
             }
@@ -285,7 +308,6 @@ class MDb extends Model
     }
     public static function edit(&$object){
         try{
-
             $name = $object->name;
             $type = $object->type;
             $data = $object->data;
@@ -304,12 +326,30 @@ class MDb extends Model
             $mObject->save();
 
             MDb::removeAttr($mObject->id);
-            MDb::insertAttr($id,json_encode($data));
+            MDb::insertAttr($mObject->id,json_encode($data));
             return true;
         }catch(\Exception $e){
-
             throw $e;
         }
+    }
+    public static function updateTos($relationName, &$parentObject, &$childrenArray){
+      $oldChildren = MDb::getTos($relationName, $parentObject->id);
+      $oldIds = MDb::extractObjectIds($oldChildren);
+      $newIds = MDb::extractObjectIds($childrenArray);
+      foreach($oldIds->ids as $id=>$object){
+        if($newIds->ids[$id]){
+          MDb::edit($newIds->ids[$id]);
+        }
+        else{
+          MDb::remove($id);
+          MDb::purgeRelation($relationName,$parentObject->id,$id);
+        }
+      }
+      foreach($newIds->nonIds as $key=>$value){
+        $valueId = MDb::insert($value->type,$value->name,$value->data);
+        MDb::createRelation($relationName,$parentObject->id,$valueId);
+      }
+      return true;
     }
 
     private static function makeWhere(&$singleWhere){

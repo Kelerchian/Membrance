@@ -23,7 +23,7 @@ Route::get('/kk',[
 
 Route::get('/kk/list',[
   'as'=>'kk.list',
-  'uses'=>'KKController@list'
+  'uses'=>'KKController@getList'
 ]);
 
 Route::get('/kk/add',[
@@ -34,6 +34,16 @@ Route::get('/kk/add',[
 Route::post('/kk/add',[
   'as'=>'kk.add',
   'uses'=>'KKController@store'
+]);
+
+Route::get('/kk/edit/{id}',[
+  'as'=>'kk.edit',
+  'uses'=>'KKController@edit'
+]);
+
+Route::post('/kk/edit/{id}',[
+  'as'=>'kk.edit',
+  'uses'=>'KKController@update'
 ]);
 
 

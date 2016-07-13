@@ -18,7 +18,7 @@ active
         <div class="row form-group">
           <div class='col-sm-12'>
             <label>Nomor Kartu Keluarga</label>
-            <input type='text' placeholder="Nomor" name='nomor' required/>
+            <input value="{{ $kk->name }}" type='text' placeholder="Nomor" name='nomor' required/>
           </div>
         </div>
 
@@ -27,33 +27,33 @@ active
             <div class='row form-group'>
               <div class='col-sm-12'>
                 <label>Nama Kepala Keluarga</label>
-                <input list='datalist-kepala' type='text' name='nama_kepala_keluarga'/>
+                <input value="{{ $kk->data->nama_kepala_keluarga }}" list='datalist-kepala' type='text' name='nama_kepala_keluarga'/>
               </div>
             </div>
             <div class='row form-group'>
               <div class='col-sm-12'>
                 <label>Alamat</label>
-                <input type='text' name='alamat'/>
+                <input value="{{ $kk->data->alamat }}" type='text' name='alamat'/>
               </div>
             </div>
             <div class='row form-group'>
               <div class='col-sm-6'>
                 <label>RT</label>
-                <input type='number' min="0" name='rt'/>
+                <input value="{{ $kk->data->rt }}" type='number' min="0" name='rt'/>
               </div>
               <div class='col-sm-6'>
                 <label>RW</label>
-                <input type='number' min="0" name='rw'/>
+                <input value="{{ $kk->data->rw }}" type='number' min="0" name='rw'/>
               </div>
             </div>
             <div class='row form-group'>
               <div class='col-sm-6'>
                 <label>Desa</label>
-                <input type='text' name='desa'/>
+                <input value="{{ $kk->data->desa }}" type='text' name='desa'/>
               </div>
               <div class='col-sm-6'>
                 <label>Kelurahan</label>
-                <input type='text' name='kelurahan'/>
+                <input value="{{ $kk->data->kelurahan }}" type='text' name='kelurahan'/>
               </div>
             </div>
           </div>
@@ -61,29 +61,29 @@ active
             <div class='row form-group'>
               <div class='col-sm-12'>
                 <label>Kecamatan</label>
-                <input type='text' name='kecamatan'/>
+                <input value="{{ $kk->data->kecamatan }}" type='text' name='kecamatan'/>
               </div>
             </div>
             <div class='row form-group'>
               <div class='col-sm-6'>
                 <label>Kabupaten</label>
-                <input type='text' name='kabupaten'/>
+                <input value="{{ $kk->data->kabupaten }}" type='text' name='kabupaten'/>
               </div>
               <div class='col-sm-6'>
                 <label>Kota</label>
-                <input type='text' name='kota'/>
+                <input value="{{ $kk->data->kota }}" type='text' name='kota'/>
               </div>
             </div>
             <div class='row form-group'>
               <div class='col-sm-12'>
                 <label>Kode Pos</label>
-                <input type='text' name='kode_pos'/>
+                <input value="{{ $kk->data->kode_pos }}" type='text' name='kode_pos'/>
               </div>
             </div>
             <div class='row form-group'>
               <div class='col-sm-12'>
                 <label>Provinsi</label>
-                <input type='text' name='provinsi'/>
+                <input value="{{ $kk->data->provinsi }}" type='text' name='provinsi'/>
               </div>
             </div>
           </div>
@@ -190,7 +190,10 @@ active
   </datalist>
   <div id="repo">
     <div class='submitUrl'>
-      {{ route('kk.add') }}
+      {{ route('kk.edit',$kk->id) }}
+    </div>
+    <div class='dataPenduduk'>
+      {{ json_encode($penduduk) }}
     </div>
   </div>
   <script>
@@ -331,7 +334,37 @@ active
           error: AppGlobal.ajax.ajaxError
         })
       }
-      page.list.refresh()
+      page.list.loadRow = function(obj){
+        return page.e.make('tr',(
+          page.e.make('td',page.e.make('button',{type:'button',onclick:'page.list.delete(event,this)'},'&times; hapus'))+
+          page.e.make('td','')+
+          page.e.make('td',page.e.make('input',{value:obj.id,'data-name':'id',style:'display:none'})+page.e.make('input',{value:obj.data.nama_lengkap, type:'text',onblur:'page.list.refreshDatalist()','data-name':'nama_lengkap'}))+
+          page.e.make('td',page.e.make('input',{value:obj.name, type:'text','data-name':'nik',pattern:'[0-9]*'}))+
+          page.e.make('td',page.e.make('input',{value:obj.data.jenis_kelamin, type:'text',onblur:'page.list.refreshDatalist()',list:'datalist-gender','data-name':'jenis_kelamin'}))+
+          page.e.make('td',page.e.make('input',{value:obj.data.tempat_lahir, type:'text','data-name':'tempat_lahir'}))+
+          page.e.make('td',page.e.make('input',{value:obj.data.tanggal_lahir, type:'date','data-name':'tanggal_lahir'}))+
+          page.e.make('td',page.e.make('input',{value:obj.data.agama, type:'text',list:'datalist-agama','data-name':'agama'}))+
+          page.e.make('td',page.e.make('input',{value:obj.data.pendidikan, type:'text',list:'datalist-pendidikan','data-name':'pendidikan'}))+
+          page.e.make('td',page.e.make('input',{value:obj.data.jenis_pekerjaan, type:'text',list:'datalist-pekerjaan','data-name':'jenis_pekerjaan'}))+
+          page.e.make('td',page.e.make('input',{value:obj.data.status_pernikahan, type:'text',list:'datalist-pernikahan','data-name':'status_pernikahan'}))+
+          page.e.make('td',page.e.make('input',{value:obj.data.status_hubungan_dalam_keluarga, type:'text','data-name':'status_hubungan_dalam_keluarga'}))+
+          page.e.make('td',page.e.make('input',{value:obj.data.no_paspor, type:'text','data-name':'no_paspor'}))+
+          page.e.make('td',page.e.make('input',{value:obj.data.no_kitas_kitap, type:'text','data-name':'no_kitas_kitap'}))+
+          page.e.make('td',page.e.make('input',{value:obj.data.ayah, type:'text',list:'datalist-ayah','data-name':'ayah'}))+
+          page.e.make('td',page.e.make('input',{value:obj.data.ibu, type:'text',list:'datalist-ibu','data-name':'ibu'}))
+        ))
+      }
+      page.list.load = function(){
+        var penduduk = JSON.parse(page.repo.dataPenduduk)
+        var body = ''
+        for(var i = 0; i<penduduk.length; i++){
+          body+=page.list.loadRow(penduduk[i])
+        }
+        page.table.children('tbody').html(body)
+        page.list.refresh()
+        page.list.refreshDatalist()
+      }
+      page.list.load()
   })
   </script>
 @endsection

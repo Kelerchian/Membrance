@@ -34,9 +34,8 @@ class Protocol extends Model
       }catch(\Exception $e){
         DB::rollBack();
         $ret['stackTrace'] = $e->getTraceAsString();
-        $ret['message'] = $e->getMessage();
+        $ret['message'] = $e->getMessage().' in '.$e->getFile().' at line '.$e->getLine();
         $ret['status'] = 0;
-        throw $e;
       }
       return json_encode($ret);
     }
