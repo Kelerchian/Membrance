@@ -10,6 +10,7 @@
 .cards>div{
   padding: 0;
   box-shadow: 0 1px 0px black;
+    border: 1px solid white;
 }
 
 .cards a{
@@ -18,7 +19,7 @@
   height: 100%;
   display: block;
   background: #292929;
-  color: inherit;
+  color: white;
   text-decoration: none;
 }
 
