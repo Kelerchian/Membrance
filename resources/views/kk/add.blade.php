@@ -291,20 +291,36 @@ active
         })
 
         var penduduk = []
-        page.table.children('tbody').children('tr').each(function(){
-          var single = {}
-          single.data = {}
-          $(this).find('input[data-name]').each(function(){
-            var name = $(this).attr('data-name')
-            var val = $(this).val()
-            if(name == 'nik'){
-              single.name = val
-            }else{
-              single.data[name] = val
-            }
+        try{
+          page.table.children('tbody').children('tr').each(function(){
+            var single = {}
+            single.data = {}
+            $(this).find('input[data-name]').each(function(){
+              var name = $(this).attr('data-name')
+              var val = $(this).val()
+              if(name == 'nik'){
+                single.name = val
+                if(single.name.trim().length == 0){
+                  var focuselement = this
+                  setTimeout(function(){
+                    focuselement.focus();
+                  },1000)
+                  throw 'NIK harus diisi';
+                }
+              }
+              else if(name=='id'){
+                single.id = val
+              }
+              else{
+                single.data[name] = val
+              }
+            })
+            penduduk.push(single)
           })
-          penduduk.push(single)
-        })
+        }catch(e){
+          AppGlobal.postMessage('warning',e);
+          return;
+        }
         AppGlobal.ajax.json({
           method: 'post',
           data: {kk:JSON.stringify(kk),penduduk:JSON.stringify(penduduk)},

@@ -41,6 +41,11 @@ Route::get('/kk/edit/{id}',[
   'uses'=>'KKController@edit'
 ]);
 
+Route::post('/kk/edit/{id}',[
+  'as'=>'kk.edit',
+  'uses'=>'KKController@update'
+]);
+
 
 /*
 Route::get('/storetest',function(){
