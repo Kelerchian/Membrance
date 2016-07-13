@@ -87,6 +87,10 @@ class MDb extends Model
       }
     }
     */
+    public static function getTos($name,$from){
+      $ret = MRelation::with('tos.attr')->where('name',$name)->where('from',$from)->get();
+      return MDb::mJoin($ret[0]->tos);
+    }
     public static function purgeRelation($name,$from,$to){
       MRelation::where('name',$name)->where('from',$from)->where('to',$to)->delete();
       return true;
@@ -99,7 +103,7 @@ class MDb extends Model
       MRelation::where('name',$name)->where('to',$to)->delete();
       return true;
     }
-    public static function createRelation($name,$to,$from){
+    public static function createRelation($name,$from,$to){
       $relation = new MRelation();
       $relation->name = $name;
       $relation->to = $to;
@@ -134,8 +138,7 @@ class MDb extends Model
       return MDb::where($ret,$whereClauses);
     }
     public static function getFirstById($id){
-      $ret = MObject::with('attr')
-      ->where('id',$id)->first();
+      $ret = MObject::with('attr')->where('id',$id)->first();
       return MDb::mSingleJoin($ret);
     }
     public static function getFirstTypeName($type,$name){

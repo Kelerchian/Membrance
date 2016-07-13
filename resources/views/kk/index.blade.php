@@ -41,8 +41,8 @@ active
     <div class="listUrl">
       {{ route('kk.list') }}
     </div>
-    <div class="formUrl">
-      {{ route('kk.list') }}
+    <div class="editUrl">
+      {{ route('kk.edit','') }}
     </div>
   </div>
   <script>
@@ -53,11 +53,12 @@ active
     page.list = {}
     page.list.kk = []
     page.list.get = function(){
-      AppGlobal.ajaxJson({
+      AppGlobal.ajax.json({
         url:page.repo.listUrl,
         method:'get',
         success: function(data){
           page.list.kk = data.data
+          page.list.refresh();
         }
       })
     }
@@ -67,9 +68,9 @@ active
       for(var i = 0; i<kk.length; i++){
         body+=page.e.make('tr',{},(
           page.e.make('td',i+1)
-          +page.e.make('td',kk[i].nama)
+          +page.e.make('td',kk[i].name)
           +page.e.make('td',kk[i].data.nama_kepala_keluarga)
-          +page.e.make('td','')
+          +page.e.make('td',page.e.make('a',{href:page.repo.editUrl+'/'+kk[i].id},'Ubah'))
         ))
       }
       if(kk.length == 0){
@@ -79,12 +80,7 @@ active
       }
       page.table.find('tbody').html(body)
     }
-    page.add = {}
-    page.add.form = function(){
-    }
-
-
-    page.list.refresh();
+    page.list.get();
   })
   </script>
 @endsection

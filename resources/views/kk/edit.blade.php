@@ -314,6 +314,8 @@ active
           },
           error: AppGlobal.ajax.ajaxError
         })
+        console.log(penduduk)
+        console.log(kk)
       }
       page.list.refresh()
   })

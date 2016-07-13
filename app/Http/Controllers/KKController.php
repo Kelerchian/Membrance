@@ -21,6 +21,17 @@ class KKController extends Controller
       return $ret;
     });
   }
+  public function edit($id){
+    $kk = MDb::getFirstById($id);
+    $penduduk = MDb::getTos('kk-penduduk',$id);
+    return view ('kk.edit',[
+      'kk'=>$kk,
+      'penduduk'=>$penduduk
+    ]);
+  }
+  public function update(Request $request){
+
+  }
   public function add(Request $request){
     return view('kk.add');
   }
