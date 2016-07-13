@@ -24,8 +24,9 @@
         </a>
         <nav class="col-md-8">
           <a href="{{ route('kk.index') }}" class="@yield('nav_kartu_keluarga')">Kartu Keluarga</a>
-          <a class="@yield('nav_penduduk')" href="#">Penduduk</a>
+          <a class="@yield('nav_penduduk')" href="{{ route('penduduk.index') }}">Penduduk</a>
           <a class="@yield('nav_rt_rws')" href="#">RT/RW</a>
+          <a class="" href="#">Template Penduduk</a>
         </nav>
     </div>
   </div>

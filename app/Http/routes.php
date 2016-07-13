@@ -46,6 +46,11 @@ Route::post('/kk/edit/{id}',[
   'uses'=>'KKController@update'
 ]);
 
+Route::get('/penduduk',[
+    'as'=>'penduduk.index',
+    'uses'=>'PendudukController@index'
+]);
+
 
 /*
 Route::get('/storetest',function(){
