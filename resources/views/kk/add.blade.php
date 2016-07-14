@@ -168,6 +168,19 @@ active
             <button type='button' onclick="page.list.add()">Tambah Anggota Keluarga</button>
           </div>
         </div>
+        <div class='row'>
+          <div class='col-md-12'>
+            <h4>Data Tambahan</h4>
+            <div class='row'>
+              @foreach($kkTemplate as $template)
+                <div class='col-sm-6'>
+                  <label>{{ $template->name }}</label>
+                  <input type='{{ $template->type }}' name='{{ $template->name }}'/>
+                </div>
+              @endforeach
+            </div>
+          </div>
+        </div>
       </form>
   </div>
   <datalist id='datalist-kepala' vile-weave="datalistKepala">

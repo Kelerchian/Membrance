@@ -1,6 +1,6 @@
 <div id="globalmessage" class='container' vile-weave='globalmessage'>
-	@if(count($errors)>1)
-    @foreach($errors as $error)
+	@if(session()->has('errors') && count(session('errors'))>0)
+    @foreach(session('errors') as $error)
       <div class='alert alert-danger'>
         <a class='close' onclick="AppGlobal.closeNotification(event,this)">&times;</a>
         <strong>Danger!</strong>
@@ -8,7 +8,7 @@
       </div>
     @endforeach
 	@endif
-  <div class='alert alert-success'>
+  <!--div class='alert alert-success'>
     <a class='close' onclick="AppGlobal.closeNotification(event,this)">&times;</a>
     <strong>Success!</strong>
     <span>Test</span>
@@ -27,5 +27,5 @@
     <a class='close' onclick="AppGlobal.closeNotification(event,this)">&times;</a>
     <strong>Danger!</strong>
     <span>Test</span>
-  </div>
+  </div-->
 </div>

@@ -1,0 +1,22 @@
+.mandatory input{
+  padding-top: 3px;
+  padding-bottom: 3px;
+  margin: 3px 0px;
+}
+
+.optional .list{
+  padding: 15px 0px;
+}
+
+.optional .list select,input,button{
+  width: 100%;
+  padding: 10px 3px !important;
+}
+
+.templateContainer{
+  opacity: 0.5;
+}
+
+.templateContainer:hover{
+  opacity: 1;
+}

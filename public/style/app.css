@@ -170,4 +170,5 @@ button:hover{
 .app-header>nav>a:hover{
   text-decoration: none;
   color: #111;
+  zoom: 1.01;
 }

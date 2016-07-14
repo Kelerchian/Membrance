@@ -51,6 +51,21 @@ Route::get('/penduduk',[
     'uses'=>'PendudukController@index'
 ]);
 
+Route::get('/template',[
+    'as'=>'template.index',
+    'uses'=>'TemplateController@index'
+]);
+
+Route::post('/storekk',[
+    'as'=>'template.storekk',
+    'uses'=>'TemplateController@storekk'
+]);
+
+Route::post('/storependuduk',[
+    'as'=>'template.storependuduk',
+    'uses'=>'TemplateController@storependuduk'
+]);
+
 
 /*
 Route::get('/storetest',function(){

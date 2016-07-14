@@ -166,6 +166,10 @@ class MDb extends Model
       $ret = MObject::with('attr')->where('type',$type)->where('name',$name)->first();
       return MDb::mSingleJoin($ret);
     }
+    public static function getFirstTypeId($type,$id){
+      $ret = MObject::with('attr')->where('id',$id)->where('type',$type)->first();
+      return MDb::mSingleJoin($ret);
+    }
     private static function getSingleData(&$object){
       $ret = MAttribute::selectRaw("GROUP_CONCAT(data SEPARATOR '') as data")->where('m_object_id',$object->id)->first();
       $object->data = json_decode($ret->data);
@@ -321,6 +325,38 @@ class MDb extends Model
                 throw new \Exception('Data is empty');
             }
             $mObject = MObject::find($object->id);
+            $mObject->name = $name;
+            $mObject->type = $type;
+            $mObject->save();
+
+            MDb::removeAttr($mObject->id);
+            MDb::insertAttr($mObject->id,json_encode($data));
+            return true;
+        }catch(\Exception $e){
+            throw $e;
+        }
+    }
+    public static function editOrInsert(&$object){
+        try{
+            $name = $object->name;
+            $type = $object->type;
+            $data = $object->data;
+            if($name == null){
+                throw new \Exception('Name is empty');
+            }
+            if($type == null){
+                throw new \Exception('type is empty');
+            }
+            if($data == null){
+                throw new \Exception('Data is empty');
+            }
+            $mObject = null;
+            if(isset($object->id)){
+              $mObject = MObject::find($object->id);
+            }
+            if($mObject == null){
+              $mObject = new MObject();
+            }
             $mObject->name = $name;
             $mObject->type = $type;
             $mObject->save();

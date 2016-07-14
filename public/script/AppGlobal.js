@@ -19,6 +19,12 @@ AppGlobal.initialize = function(page){
       }
     })
   }
+
+  var storedNotification = AppGlobal.storage.get();
+  for(var i = 0; i<storedNotification.length; i++){
+    AppGlobal.postMessage(storedNotification[i].type,storedNotification[i].text);
+  }
+  AppGlobal.storage.delete();
 }
 AppGlobal.closeNotification = function(event,element){
   $(element).parent().remove();
@@ -38,7 +44,6 @@ AppGlobal.storage = {
   },
   store: function(type,text){
     var storage = this.get();
-    console.log(storage)
     storage.push({type:type,text:text});
     this.save(storage);
   },

@@ -22,11 +22,33 @@ class KKController extends Controller
     });
   }
   public function edit($id){
-    $kk = MDb::getFirstById($id);
+    $kk = MDb::getFirstTypeId('kk',$id);
+    if($kk == null){
+      return redirect(route('kk.index'))->with([
+        'errors'=>['Halaman yang anda cari tidak ditemukan']
+      ]);
+    }
     $penduduk = MDb::getTos('kk-penduduk',$id);
+
+    $kkTemplate = MDb::getFirstTypeName('template','kk');
+    if($kkTemplate == null){
+        $kkTemplate = array();
+    }
+    else{
+        $kkTemplate = $kkTemplate->data->template;
+    }
+    $pendudukTemplate = MDb::getFirstTypeName('template','penduduk');
+    if($pendudukTemplate == null){
+      $pendudukTemplate = array();
+    }else{
+      $pendudukTemplate = $pendudukTemplate->data->template;
+    }
+
     return view ('kk.edit',[
       'kk'=>$kk,
-      'penduduk'=>$penduduk
+      'penduduk'=>$penduduk,
+      'kkTemplate'=>$kkTemplate,
+      'pendudukTemplate'=>$pendudukTemplate
     ]);
   }
   public function update(Request $request, $id){
@@ -47,7 +69,24 @@ class KKController extends Controller
     });
   }
   public function add(Request $request){
-    return view('kk.add');
+    $kkTemplate = MDb::getFirstTypeName('template','kk');
+    if($kkTemplate == null){
+        $kkTemplate = array();
+    }
+    else{
+        $kkTemplate = $kkTemplate->data->template;
+    }
+    $pendudukTemplate = MDb::getFirstTypeName('template','penduduk');
+    if($pendudukTemplate == null){
+      $pendudukTemplate = array();
+    }else{
+      $pendudukTemplate = $pendudukTemplate->data->template;
+    }
+
+    return view('kk.add',[
+      'kkTemplate'=>$kkTemplate,
+      'pendudukTemplate'=>$pendudukTemplate
+    ]);
   }
   public function store(Request $request){
     $input = $request->input();
@@ -55,9 +94,6 @@ class KKController extends Controller
     $penduduk = json_decode($input['penduduk']);
     return Protocol::transaction(function()use($kk,$penduduk){
       $data = array();
-      if(MDB::getFirstTypeName('kk',$kk->name)!=null){
-        throw new \Exception('Sudah ada kartu keluarga dengan nomor: '.$kk->nomor_kartu_keluarga);
-      }
       $idKK=MDB::insert('kk',$kk->name,$kk->data);
       foreach($penduduk as $person){
         $pName = $person->name;
