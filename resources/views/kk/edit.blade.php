@@ -359,7 +359,7 @@ active
       page.list.fromTemplateLoad = function(obj){
         var body = ''
         for(var i = 0; i<page.pendudukTemplate.length; i++){
-          body+=page.e.make('td',page.e.make('input',{value:(obj[page.pendudukTemplate[i].name] || ''),type:page.pendudukTemplate[i].type,'data-name':page.pendudukTemplate[i].name}))
+          body+=page.e.make('td',page.e.make('input',{value:(obj.data[page.pendudukTemplate[i].name] || ''),type:page.pendudukTemplate[i].type,'data-name':page.pendudukTemplate[i].name}))
         }
         return body
       }
