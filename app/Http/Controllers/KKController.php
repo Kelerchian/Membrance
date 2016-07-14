@@ -11,7 +11,16 @@ use App\Protocol;
 class KKController extends Controller
 {
   public function index(){
-    return view('kk.index');
+    $kkTemplate = MDb::getFirstTypeName('template','kk');
+    if($kkTemplate == null){
+        $kkTemplate = array();
+    }
+    else{
+        $kkTemplate = $kkTemplate->data->template;
+    }
+    return view('kk.index',[
+      'kkTemplate'=>$kkTemplate
+    ]);
   }
   public function getList(){
     return Protocol::ajax(function(){
@@ -53,9 +62,15 @@ class KKController extends Controller
   }
   public function update(Request $request, $id){
     $input = $request->input();
-    $kk = json_decode($input['kk']);
-    $kk->type = 'kk';
-    $kk->id = $id;
+    $kkData = json_decode($input['kk']);
+
+    $kk = MDb::getFirstTypeId('kk',$id);
+    if($kk == null){
+      return redirect(route('kk.index'))->with([
+        'errors'=>['Halaman yang anda cari tidak ditemukan']
+      ]);
+    }
+    $kk->data = $kkData->data;
     $penduduk = json_decode($input['penduduk']);
     return Protocol::transaction(function()use($kk,$penduduk){
       $data = array();
@@ -94,7 +109,13 @@ class KKController extends Controller
     $penduduk = json_decode($input['penduduk']);
     return Protocol::transaction(function()use($kk,$penduduk){
       $data = array();
+      if(MDB::getFirstTypeName('kk',$kk->name)!=null){
+        throw new \Exception('Sudah ada kartu keluarga dengan nomor: '.$kk->nomor_kartu_keluarga);
+      }
       $idKK=MDB::insert('kk',$kk->name,$kk->data);
+      if(count($penduduk) == 0){
+        throw new \Exception('Anggota Keluarga masih kosong');
+      }
       foreach($penduduk as $person){
         $pName = $person->name;
         $pData = $person->data;

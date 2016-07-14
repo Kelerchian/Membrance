@@ -85,6 +85,15 @@ button:hover{
     overflow-x: scroll;
 }
 
+.clickable{
+  cursor: pointer;
+  font-style: italic;
+  color: #440;
+}
+.clickable:hover{
+  text-decoration: underline;
+}
+
 .content{
   animation: fadein 0.8s ease;
   padding-bottom: 150px;
@@ -100,6 +109,7 @@ button:hover{
   margin: 0;
   border-style: dashed;
   border-width: 2px;
+  word-wrap: break-word;
 }
 
 .alert-success{

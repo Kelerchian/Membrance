@@ -155,3 +155,43 @@ AppGlobal.ajax.json = function(object){
     }
   })
 }
+AppGlobal.sorter = {}
+AppGlobal.sorter.activate = function(table){
+  $(table).find('thead th[data-sorter]').addClass('clickable').click(function(){
+    AppGlobal.sorter.sort(this,table)
+  }).attr('title','Klik untuk melakukan sortir')
+}
+AppGlobal.sorter.sort = function(th,table){
+  var attribute = $(th).data('sorter')
+  $(table).find('tbody tr').each(function(){
+    var value = $(this).find('td[data-sorter="'+attribute+'"]').data('ori')
+    console.log($(this).find('td[data-sorter="'+attribute+'"]'),value)
+    $(this).data('ori',value)
+  })
+
+  var desc = false
+  var lastAttribute = $(table).data('lastAttribute');
+  var lastDirection = $(table).data('lastDirection');
+  if(lastAttribute == attribute){
+    desc = 'true'!=String(lastDirection)
+  }
+  $(table).data('lastAttribute',attribute)
+  $(table).data('lastDirection',String(desc))
+
+  var trs = $(table).find('tbody tr')
+  trs.detach().sort(function(a,b){
+    var va = $(a).data('ori')
+    var vb = $(b).data('ori')
+    var comparator
+    if(va>vb){
+      comparator = 1
+    }else if(va<vb){
+      comparator = -1
+    }
+    else{
+      comparator = 0
+    }
+    console.log(va,comparator,vb)
+    return comparator * (desc ? -1 : 1)
+  }).appendTo($(table).find('tbody'))
+}

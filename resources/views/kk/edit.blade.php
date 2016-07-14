@@ -18,7 +18,7 @@ active
         <div class="row form-group">
           <div class='col-sm-12'>
             <label>Nomor Kartu Keluarga</label>
-            <input value="{{ $kk->name }}" type='text' placeholder="Nomor" name='nomor' required/>
+            <input value="{{ $kk->name }}" type='text' placeholder="Nomor" disabled/>
           </div>
         </div>
 

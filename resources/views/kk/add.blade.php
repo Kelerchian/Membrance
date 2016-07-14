@@ -210,6 +210,9 @@ active
     <div class='submitUrl'>
       {{ route('kk.add') }}
     </div>
+    <div class='indexUrl'>
+      {{ route('kk.index') }}
+    </div>
     <div class='pendudukTemplate'>
       {{ json_encode($pendudukTemplate) }}
     </div>
@@ -307,6 +310,7 @@ active
         e.preventDefault()
         if(page.table.children('tbody').children('tr.dummy').length > 0){
           AppGlobal.postMessage('warning','Anggota Keluarga masih kosong')
+          return;
         }
         var kk = {}
         kk.data = {}
@@ -356,7 +360,8 @@ active
           data: {kk:JSON.stringify(kk),penduduk:JSON.stringify(penduduk)},
           url: page.submitUrl,
           success: function(data){
-            AppGlobal.ajax.ajaxSuccess(data)
+            AppGlobal.storage.store('success',data.message)
+            window.location = page.repo.indexUrl
           },
           error: AppGlobal.ajax.ajaxError
         })
