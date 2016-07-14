@@ -49,7 +49,7 @@ class TemplateController extends Controller
     $data = json_decode($request->data);
     return Protocol::transaction(function()use($data){
       $ret = array();
-      $oldTemplate = MDb::getFirstTypeName('tempate','penduduk');
+      $oldTemplate = MDb::getFirstTypeName('template','penduduk');
       $pendudukTemplate = new \StdClass();
       if($oldTemplate){
         $pendudukTemplate->id = $oldTemplate->id;

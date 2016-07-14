@@ -92,9 +92,9 @@ active
     <div class='kkTemplate'>
       {{ json_encode($kkTemplate) }}
     </div>
-      <div class='pendudukTemplate'>
-        {{ json_encode($pendudukTemplate) }}
-      </div>
+    <div class='pendudukTemplate'>
+      {{ json_encode($pendudukTemplate) }}
+    </div>
     <div class='storekkUrl'>
       {{ route('template.storekk') }}
     </div>

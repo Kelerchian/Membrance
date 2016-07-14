@@ -132,6 +132,11 @@ active
                   <th colspan="2">
                     Nama Orang Tua
                   </th>
+                  @foreach($pendudukTemplate as $template)
+                    <th rowspan="2">
+                      {{ $template->name }}
+                    </th>
+                  @endforeach
                 </tr>
                 <tr>
                   <th>
@@ -195,6 +200,9 @@ active
     <div class='dataPenduduk'>
       {{ json_encode($penduduk) }}
     </div>
+    <div class='pendudukTemplate'>
+      {{ json_encode($pendudukTemplate) }}
+    </div>
   </div>
   <script>
   var page = {}
@@ -246,7 +254,7 @@ active
               page.e.make('tr',{class:'dummy text-center'},(
                 page.e.make('td',{colspan:6},'Belum ada data')+
                 page.e.make('td',{colspan:5},'Belum ada data')+
-                page.e.make('td',{colspan:5},'Belum ada data')
+                page.e.make('td',{colspan:5+page.pendudukTemplate.length},'Belum ada data')
               ))
             )
           }
@@ -334,6 +342,13 @@ active
           error: AppGlobal.ajax.ajaxError
         })
       }
+      page.list.fromTemplateLoad = function(obj){
+        var body = ''
+        for(var i = 0; i<page.pendudukTemplate.length; i++){
+          body+=page.e.make('td',page.e.make('input',{value:(obj[page.pendudukTemplate[i].name] || ''),type:page.pendudukTemplate[i].type,'data-name':page.pendudukTemplate[i].name}))
+        }
+        return body
+      }
       page.list.loadRow = function(obj){
         return page.e.make('tr',(
           page.e.make('td',page.e.make('button',{type:'button',onclick:'page.list.delete(event,this)'},'&times; hapus'))+
@@ -351,7 +366,8 @@ active
           page.e.make('td',page.e.make('input',{value:obj.data.no_paspor, type:'text','data-name':'no_paspor'}))+
           page.e.make('td',page.e.make('input',{value:obj.data.no_kitas_kitap, type:'text','data-name':'no_kitas_kitap'}))+
           page.e.make('td',page.e.make('input',{value:obj.data.ayah, type:'text',list:'datalist-ayah','data-name':'ayah'}))+
-          page.e.make('td',page.e.make('input',{value:obj.data.ibu, type:'text',list:'datalist-ibu','data-name':'ibu'}))
+          page.e.make('td',page.e.make('input',{value:obj.data.ibu, type:'text',list:'datalist-ibu','data-name':'ibu'}))+
+          page.fromTemplateLoad(obj)
         ))
       }
       page.list.load = function(){

@@ -132,6 +132,11 @@ active
                   <th colspan="2">
                     Nama Orang Tua
                   </th>
+                  @foreach($pendudukTemplate as $template)
+                    <th rowspan="2">
+                      {{ $template->name }}
+                    </th>
+                  @endforeach
                 </tr>
                 <tr>
                   <th>
@@ -205,6 +210,9 @@ active
     <div class='submitUrl'>
       {{ route('kk.add') }}
     </div>
+    <div class='pendudukTemplate'>
+      {{ json_encode($pendudukTemplate) }}
+    </div>
   </div>
   <script>
   var page = {}
@@ -212,6 +220,7 @@ active
       AppGlobal.initialize(page)
       Vile.initialize(page)
       page.list = {}
+      page.pendudukTemplate = JSON.parse(page.repo.pendudukTemplate)
       page.list.delete = function(event,element){
         if($(element).hasClass('deleteable')){
           $(element).parents('tr').remove()
@@ -256,10 +265,17 @@ active
               page.e.make('tr',{class:'dummy text-center'},(
                 page.e.make('td',{colspan:6},'Belum ada data')+
                 page.e.make('td',{colspan:5},'Belum ada data')+
-                page.e.make('td',{colspan:5},'Belum ada data')
+                page.e.make('td',{colspan:5+page.pendudukTemplate.length},'Belum ada data')
               ))
             )
           }
+      }
+      page.list.fromTemplate = function(){
+        var body = ''
+        for(var i = 0; i<page.pendudukTemplate.length; i++){
+          body+=page.e.make('td',page.e.make('input',{type:page.pendudukTemplate[i].type,'data-name':page.pendudukTemplate[i].name}))
+        }
+        return body
       }
       page.list.newRow = function(){
         return page.e.make('tr',(
@@ -278,7 +294,8 @@ active
           page.e.make('td',page.e.make('input',{type:'text','data-name':'no_paspor'}))+
           page.e.make('td',page.e.make('input',{type:'text','data-name':'no_kitas_kitap'}))+
           page.e.make('td',page.e.make('input',{type:'text',list:'datalist-ayah','data-name':'ayah'}))+
-          page.e.make('td',page.e.make('input',{type:'text',list:'datalist-ibu','data-name':'ibu'}))
+          page.e.make('td',page.e.make('input',{type:'text',list:'datalist-ibu','data-name':'ibu'}))+
+          page.list.fromTemplate()
         ))
       }
       page.list.add = function(){
