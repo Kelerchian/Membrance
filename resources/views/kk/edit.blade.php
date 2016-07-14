@@ -173,6 +173,19 @@ active
             <button type='button' onclick="page.list.add()">Tambah Anggota Keluarga</button>
           </div>
         </div>
+        <div class='row'>
+          <div class='col-md-12'>
+            <h4>Data Tambahan</h4>
+            <div class='row'>
+              @foreach($kkTemplate as $template)
+                <div class='col-sm-6'>
+                  <label>{{ $template->name }}</label>
+                  <input value="{{ $kk->data->{$template->name} }}" type='{{ $template->type }}' name='{{ $template->name }}'/>
+                </div>
+              @endforeach
+            </div>
+          </div>
+        </div>
       </form>
   </div>
   <datalist id='datalist-kepala' vile-weave="datalistKepala">
@@ -209,6 +222,7 @@ active
   $(document).ready(function(){
       AppGlobal.initialize(page)
       Vile.initialize(page)
+      page.pendudukTemplate = JSON.parse(page.repo.pendudukTemplate)
       page.list = {}
       page.list.delete = function(event,element){
         if($(element).hasClass('deleteable')){
@@ -367,7 +381,7 @@ active
           page.e.make('td',page.e.make('input',{value:obj.data.no_kitas_kitap, type:'text','data-name':'no_kitas_kitap'}))+
           page.e.make('td',page.e.make('input',{value:obj.data.ayah, type:'text',list:'datalist-ayah','data-name':'ayah'}))+
           page.e.make('td',page.e.make('input',{value:obj.data.ibu, type:'text',list:'datalist-ibu','data-name':'ibu'}))+
-          page.fromTemplateLoad(obj)
+          page.list.fromTemplateLoad(obj)
         ))
       }
       page.list.load = function(){
