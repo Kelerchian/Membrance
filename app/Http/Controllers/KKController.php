@@ -110,7 +110,7 @@ class KKController extends Controller
     return Protocol::transaction(function()use($kk,$penduduk){
       $data = array();
       if(MDB::getFirstTypeName('kk',$kk->name)!=null){
-        throw new \Exception('Sudah ada kartu keluarga dengan nomor: '.$kk->nomor_kartu_keluarga);
+        throw new \Exception('Sudah ada kartu keluarga dengan nomor: '.$kk->name);
       }
       $idKK=MDB::insert('kk',$kk->name,$kk->data);
       if(count($penduduk) == 0){
