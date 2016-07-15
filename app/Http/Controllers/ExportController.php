@@ -10,10 +10,9 @@ use Excel;
 
 class ExportController extends Controller
 {
-    public function exportKK(Request $request){
-      $input = $request->input();
+    public function exportKK(){
 
-      $file = Excel::create(date('Y_m_d__h_i_s'),function($excel)use($input){
+      $file = Excel::create(date('Y_m_d__h_i_s'),function($excel){
         $excel->setTitle('Daftar Kartu Keluarga per '.date('d-m-Y'));
         $excel->setCreator(config('kk.creator_header'));
         $excel->setCompany(config('kk.company_header'));
@@ -32,11 +31,11 @@ class ExportController extends Controller
             $row->setFontSize(18);
           });
           $rowNo++;
-          $sheet->row($rowNo,array('Dicetak oleh'.config('kk.company_header')));
+          $sheet->row($rowNo,array('Dicetak oleh :','',config('kk.company_header')));
           $rowNo++;
-          $sheet->row($rowNo,array('Pada tanggal '.date('d-M-Y')));
+          $sheet->row($rowNo,array('Pada tanggal :','',date('d-M-Y')));
           $rowNo++;
-          $sheet->row($rowNo,array('Pukul '.date('H:i:s')));
+          $sheet->row($rowNo,array('Pukul :','',date('H:i:s')));
           $rowNo++;
 
           $headerArray = array();

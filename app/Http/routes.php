@@ -81,7 +81,7 @@ Route::post('/storependuduk',[
     'uses'=>'TemplateController@storependuduk'
 ]);
 
-Route::get('/kk/export/{id}',[
+Route::get('/kk/export',[
   'as'=>'export',
   'uses'=>'ExportController@exportKK'
 ]);

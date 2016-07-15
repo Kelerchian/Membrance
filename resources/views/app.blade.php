@@ -28,7 +28,8 @@
       <nav class="col-md-7">
         <a href="{{ route('kk.index') }}" class="@yield('nav_kartu_keluarga')">Kartu Keluarga</a>
         <a class="@yield('nav_penduduk')" href="{{ route('penduduk.index') }}">Penduduk</a>
-        <a class="@yield('nav_template')" href="{{ route('template.index') }}">Template Penduduk</a>
+        <a class="@yield('nav_template')" href="{{ route('template.index') }}">Template</a>
+        <a class="@yield('nav_template')" href="{{ route('export') }}" target="_blank">Download Excel</a>
       </nav>
     </div>
   </div>
