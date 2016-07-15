@@ -104,6 +104,14 @@ class MDb extends Model
       }
     }
     */
+    public static function getFroms($name,$to){
+      $rel = MRelation::with('froms.attr')->where('name',$name)->where('to',$to)->get();
+      $ret = new MObjectCollection();
+      foreach ($rel as $key => $value) {
+        $ret->push($rel[$key]->froms[0]);
+      }
+      return MDb::mJoin($ret);
+    }
     public static function getTos($name,$from){
       $rel = MRelation::with('tos.attr')->where('name',$name)->where('from',$from)->get();
       $ret = new MObjectCollection();
@@ -430,26 +438,33 @@ class MDb extends Model
       if(!isset($comparable->{$whereObj->attribute})){
         return false;
       }
+      $value = trim($comparable->{$whereObj->attribute});
+      if($whereObj->value == ''){
+        return true;
+      }
+      else if($value == ''){
+        return false;
+      }
       if($whereObj->relation == '=' || $whereObj->relation == '=='){
-        return $comparable->{$whereObj->attribute}==$whereObj->value;
+        return $value==$whereObj->value;
       }
       else if($whereObj->relation == '<'){
-        return $comparable->{$whereObj->attribute}<$whereObj->value;
+        return $value<$whereObj->value;
       }
       else if($whereObj->relation == '<=' || $whereObj->relation == '=<'){
-        return $comparable->{$whereObj->attribute}<=$whereObj->value;
+        return $value<=$whereObj->value;
       }
       else if($whereObj->relation == '>=' || $whereObj->relation == '=>'){
-        return $comparable->{$whereObj->attribute}>=$whereObj->value;
+        return $value>=$whereObj->value;
       }
       else if($whereObj->relation == '>'){
-        return $comparable->{$whereObj->attribute}>$whereObj->value;
+        return $value>$whereObj->value;
       }
       else if($whereObj->relation == '!=' || $whereObj->relation == '<>'){
-        return $comparable->{$whereObj->attribute}!=$whereObj->value;
+        return $value!=$whereObj->value;
       }
       else if($whereObj->relation == 'like' || $whereObj->relation == 'like'){
-        return strpos(strtolower($comparable->{$whereObj->attribute}),strtolower($whereObj->value))!==false;
+        return strpos(strtolower($value),strtolower($whereObj->value))!==false;
       }
     }
     private static function singleWhere(&$object, &$whereClauses){
@@ -475,7 +490,7 @@ class MDb extends Model
       return !($trueCount==0 && $falseCount>0);
     }
     public static function where(&$objects, &$whereClause){
-      if(isset($objects->data)){
+      if(is_a($objects,'MObject')){
         return MDb::singleWhere($objects, $whereClause);
       }
       else{

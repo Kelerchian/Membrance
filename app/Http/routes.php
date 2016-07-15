@@ -51,6 +51,16 @@ Route::get('/penduduk',[
     'uses'=>'PendudukController@index'
 ]);
 
+Route::get('/penduduk/list',[
+    'as'=>'penduduk.list',
+    'uses'=>'PendudukController@getList'
+]);
+
+Route::get('/penduduk/jumpkk/{id}',[
+    'as'=>'penduduk.jumpKK',
+    'uses'=>'PendudukController@jumpKK'
+]);
+
 Route::get('/template',[
     'as'=>'template.index',
     'uses'=>'TemplateController@index'

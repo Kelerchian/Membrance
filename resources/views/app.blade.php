@@ -7,6 +7,7 @@
   <link rel="stylesheet" href="{{ url('style/font.css') }}" />
   <link rel="stylesheet" href="{{ url('style/app.css') }}" />
   <script src="{{ url('framework/jquery/jquery-3.0.0.min.js') }}"></script>
+  <script src="{{ url('framework/dateEx/dateEx.js') }}"></script>
   <script src="{{ url('framework/vile/vile.js') }}"></script>
   <script src="{{ url('script/AppGlobal.js') }}"></script>
   @yield('head.after')

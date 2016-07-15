@@ -11,98 +11,111 @@ active
     <h4>Daftar Kartu Keluarga</h4>
     <a href="#" onclick="page.form.toggle(event)">advanced search</a>
     <div class='row'>
-      <form class='col-md-12 display-none' vile-weave='form' onsubmit="page.form.submit(event)">
-          <div class="row">
-            <div class='col-sm-12 text-right'>
-              <button type="submit">Cari</button>
-            </div>
-          </div>
-          <div class="row form-group">
-            <div class='col-sm-12'>
-              <label>Nomor Kartu Keluarga</label>
-              <input type='text' name='nomor'/>
-            </div>
-          </div>
-          <div class="row form-group">
-            <div class="col-sm-6">
-              <div class='row form-group'>
-                <div class='col-sm-12'>
-                  <label>Nama Kepala Keluarga</label>
-                  <input list='datalist-kepala' type='text' name='nama_kepala_keluarga'/>
-                </div>
-              </div>
-              <div class='row form-group'>
-                <div class='col-sm-12'>
-                  <label>Alamat</label>
-                  <input type='text' name='alamat'/>
-                </div>
-              </div>
-              <div class='row form-group'>
-                <div class='col-sm-6'>
-                  <label>RT</label>
-                  <input type='number' min="0" name='rt'/>
-                </div>
-                <div class='col-sm-6'>
-                  <label>RW</label>
-                  <input type='number' min="0" name='rw'/>
-                </div>
-              </div>
-              <div class='row form-group'>
-                <div class='col-sm-6'>
-                  <label>Desa</label>
-                  <input type='text' name='desa'/>
-                </div>
-                <div class='col-sm-6'>
-                  <label>Kelurahan</label>
-                  <input type='text' name='kelurahan'/>
-                </div>
+      <div class='col-md-12'>
+        <form class='display-none' vile-weave='form' onsubmit="page.form.submit(event)">
+            <div class="row">
+              <div class='col-sm-12 text-right'>
+                <button type="submit">Cari</button>
               </div>
             </div>
-            <div class="col-sm-6">
-              <div class='row form-group'>
-                <div class='col-sm-12'>
-                  <label>Kecamatan</label>
-                  <input type='text' name='kecamatan'/>
-                </div>
-              </div>
-              <div class='row form-group'>
-                <div class='col-sm-6'>
-                  <label>Kabupaten</label>
-                  <input type='text' name='kabupaten'/>
-                </div>
-                <div class='col-sm-6'>
-                  <label>Kota</label>
-                  <input type='text' name='kota'/>
-                </div>
-              </div>
-              <div class='row form-group'>
-                <div class='col-sm-12'>
-                  <label>Kode Pos</label>
-                  <input type='text' name='kode_pos' pattern="\d*"/>
-                </div>
-              </div>
-              <div class='row form-group'>
-                <div class='col-sm-12'>
-                  <label>Provinsi</label>
-                  <input type='text' name='provinsi'/>
-                </div>
+            <div class="row form-group">
+              <div class='col-sm-12'>
+                <label>Nomor Kartu Keluarga</label>
+                <input type='text' name='nomor'/>
               </div>
             </div>
-          </div>
-          <div class='row'>
-            <div class='col-md-12'>
-              <h4>Data Tambahan</h4>
-              <div class='row'>
-                @foreach($kkTemplate as $template)
-                  <div class='col-sm-6'>
-                    <label>{{ $template->name }}</label>
-                    <input type='{{ $template->type }}' name='{{ $template->name }}'/>
+            <div class="row form-group">
+              <div class="col-sm-6">
+                <div class='row form-group'>
+                  <div class='col-sm-12'>
+                    <label>Nama Kepala Keluarga</label>
+                    <input list='datalist-kepala' type='text' name='nama_kepala_keluarga'/>
                   </div>
-                @endforeach
+                </div>
+                <div class='row form-group'>
+                  <div class='col-sm-12'>
+                    <label>Alamat</label>
+                    <input type='text' name='alamat'/>
+                  </div>
+                </div>
+                <div class='row form-group'>
+                  <div class='col-sm-6'>
+                    <label>RT</label>
+                    <input type='number' min="0" name='rt'/>
+                  </div>
+                  <div class='col-sm-6'>
+                    <label>RW</label>
+                    <input type='number' min="0" name='rw'/>
+                  </div>
+                </div>
+                <div class='row form-group'>
+                  <div class='col-sm-6'>
+                    <label>Desa</label>
+                    <input type='text' name='desa'/>
+                  </div>
+                  <div class='col-sm-6'>
+                    <label>Kelurahan</label>
+                    <input type='text' name='kelurahan'/>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class='row form-group'>
+                  <div class='col-sm-12'>
+                    <label>Kecamatan</label>
+                    <input type='text' name='kecamatan'/>
+                  </div>
+                </div>
+                <div class='row form-group'>
+                  <div class='col-sm-6'>
+                    <label>Kabupaten</label>
+                    <input type='text' name='kabupaten'/>
+                  </div>
+                  <div class='col-sm-6'>
+                    <label>Kota</label>
+                    <input type='text' name='kota'/>
+                  </div>
+                </div>
+                <div class='row form-group'>
+                  <div class='col-sm-12'>
+                    <label>Kode Pos</label>
+                    <input type='text' name='kode_pos' pattern="\d*"/>
+                  </div>
+                </div>
+                <div class='row form-group'>
+                  <div class='col-sm-12'>
+                    <label>Provinsi</label>
+                    <input type='text' name='provinsi'/>
+                  </div>
+                </div>
               </div>
             </div>
-          </div>
-      </form>
+            <div class='row'>
+              <div class='col-md-12'>
+                <h4>Data Tambahan</h4>
+                <div class='row'>
+                  @foreach($kkTemplate as $template)
+                    @if($template->type == 'date')
+                    <div class='col-sm-3'>
+                      <label>{{ $template->name }} Dari</label>
+                      <input type='{{ $template->type }}' data-compare='>=' name='{{ $template->name }}'/>
+                    </div>
+                    <div class='col-sm-3'>
+                      <label>{{ $template->name }} Ke</label>
+                      <input type='{{ $template->type }}' data-compare='<=' name='{{ $template->name }}'/>
+                    </div>
+                    @else
+                    <div class='col-sm-6'>
+                      <label>{{ $template->name }}</label>
+                      <input type='{{ $template->type }}' name='{{ $template->name }}'/>
+                    </div>
+                    @endif
+                  @endforeach
+                </div>
+              </div>
+            </div>
+        </form>
+      </div>
     </div>
     <div class='pageno-container' vile-weave='tablePagesTop'>
     </div>
@@ -188,12 +201,6 @@ active
   $(document).ready(function(){
     AppGlobal.initialize(page)
     Vile.initialize(page)
-    page.form.toggle = function(){
-      page.form.toggleClass('display-none')
-    }
-    page.form.undisplay = function(){
-      page.form.addClass('display-none')
-    }
     page.form.submit = function(e){
       e.preventDefault()
       page.list.get();
@@ -204,10 +211,11 @@ active
     page.list.get = function(){
       var query = []
       page.form.find('input[name]').each(function(){
+        var dataCompare = $(this).attr('data-compare') || 'like'
         var name = $(this).attr('name')
         var value = $(this).val()
         if(value.trim().length > 0){
-          query.push([name,'like',value])
+          query.push([name,dataCompare,value])
         }
       })
       AppGlobal.ajax.json({
@@ -225,15 +233,16 @@ active
             }
             page.tablePagesTop.html(pageBullets)
             page.tablePagesBottom.html(pageBullets)
-
           })
+          page.form.hide()
         }
       })
     }
     page.list.fromTemplate = function(obj){
       var body = ''
       for(var i = 0; i<page.kkTemplate.length; i++){
-        var value = obj.data[page.kkTemplate[i]]
+        var value = obj.data[page.kkTemplate[i]] || ''
+        var printval = (page.kkTemplate[i].type == 'date' && value!='' ? dateEx.print(value):value)
         body+=page.e.make('td',{'data-sorter':page.kkTemplate[i],'data-ori':value},value)
       }
       return body
@@ -262,7 +271,8 @@ active
       }
       if(kk.length == 0){
         body+=page.e.make('tr',
-          (page.e.make('td',{colspan:4,class:'text-center'},'belum ada kartu keluarga yang terdaftar'))
+          (page.e.make('td',{colspan:5,class:'text-center'},'belum ada kartu keluarga yang terdaftar'))+
+          (page.e.make('td',{colspan:page.kkTemplate.length+9,class:'text-center'},'belum ada kartu keluarga yang terdaftar'))
         )
       }
       page.table.find('tbody').html(body)

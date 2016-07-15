@@ -28,7 +28,7 @@ class KKController extends Controller
     return Protocol::ajax(function()use($query){
       $ret = array();
       $ret['data'] = MDb::getTypeWhere('kk',$query);
-      $ret['message'] = 'berhasil mengambil data';
+      $ret['message'] = 'Berhasil mengambil data kartu keluarga';
       return $ret;
     });
   }
