@@ -123,7 +123,7 @@ active
       <table class='clean-table important' vile-weave='table'>
         <thead>
           <tr>
-            <th colspan="{{14+count($kkTemplate)}}" class='buttons float-left'>
+            <th colspan="{{16+count($kkTemplate)}}" class='buttons float-left'>
               <a href="{{ route('kk.add') }}"><span class='glyphicon glyphicon-plus'></span> Daftarkan Kartu Keluarga
               </a>
             </th>
@@ -167,6 +167,12 @@ active
             </th>
             <th data-sorter="provinsi">
               Provinsi
+            </th>
+            <th data-sorter="created_at">
+              Tanggal Input
+            </th>
+            <th data-sorter="updated_at">
+              Tanggal Update
             </th>
             @foreach($kkTemplate as $template)
             <th data-sorter="{{$template->name}}">
@@ -265,6 +271,8 @@ active
           +page.e.make('td',{'data-sorter':'kota','data-ori':kk[i].data.kota},kk[i].data.kota)
           +page.e.make('td',{'data-sorter':'kode_pos','data-ori':kk[i].data.kode_pos},kk[i].data.kode_pos)
           +page.e.make('td',{'data-sorter':'provinsi','data-ori':kk[i].data.provinsi},kk[i].data.provinsi)
+          +page.e.make('td',{'data-sorter':'created_at','data-ori':kk[i].created_at},dateEx.printTime(kk[i].created_at))
+          +page.e.make('td',{'data-sorter':'updated_at','data-ori':kk[i].updated_at},dateEx.printTime(kk[i].updated_at))
           +page.list.fromTemplate(kk[i])
           +page.e.make('td',page.e.make('a',{href:page.repo.editUrl+'/'+kk[i].id},'Ubah'))
         ))
@@ -272,7 +280,7 @@ active
       if(kk.length == 0){
         body+=page.e.make('tr',
           (page.e.make('td',{colspan:5,class:'text-center'},'belum ada kartu keluarga yang terdaftar'))+
-          (page.e.make('td',{colspan:page.kkTemplate.length+9,class:'text-center'},'belum ada kartu keluarga yang terdaftar'))
+          (page.e.make('td',{colspan:page.kkTemplate.length+11,class:'text-center'},'belum ada kartu keluarga yang terdaftar'))
         )
       }
       page.table.find('tbody').html(body)

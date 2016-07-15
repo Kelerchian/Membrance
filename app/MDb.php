@@ -337,6 +337,7 @@ class MDb extends Model
             $mObject = MObject::find($object->id);
             $mObject->name = $name;
             $mObject->type = $type;
+            $mObject->updated_at = date('Y-m-d H:i:s');
             $mObject->save();
 
             MDb::removeAttr($mObject->id);

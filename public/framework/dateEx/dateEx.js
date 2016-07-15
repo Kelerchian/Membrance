@@ -8,6 +8,12 @@ var dateEx = {
 	dateToAbbrvDate: function(date){
 		return date.getDate()+" "+this.monthNames[date.getMonth()]+" "+date.getFullYear();
 	},
+	dateToAbbrvTime: function(date){
+		return date.getDate()+" "+this.monthNames[date.getMonth()]+" "+date.getFullYear()+" "
+		+("0"+String(date.getHours())).slice(-2)+":"
+		+("0"+String(date.getMinutes())).slice(-2)+":"
+		+("0"+String(date.getSeconds())).slice(-2);
+	},
 	print: function(obj){
 		if(obj instanceof Date){
 
@@ -19,6 +25,22 @@ var dateEx = {
 			throw "It is not date"
 		}
 		var tanggalstring = this.dateToAbbrvDate(obj)
+		if(tanggalstring.indexOf('NaN')>-1 || tanggalstring.indexOf('undefined')>-1){
+			tanggalstring = ""
+		}
+		return tanggalstring
+	},
+	printTime: function(obj){
+		if(obj instanceof Date){
+
+		}
+		else if(typeof obj == 'string'){
+			obj = new Date(obj)
+		}
+		else{
+			throw "It is not date"
+		}
+		var tanggalstring = this.dateToAbbrvTime(obj)
 		if(tanggalstring.indexOf('NaN')>-1 || tanggalstring.indexOf('undefined')>-1){
 			tanggalstring = ""
 		}
