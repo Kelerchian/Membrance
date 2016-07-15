@@ -11,6 +11,15 @@ use App\Protocol;
 class PendudukController extends Controller
 {
     public function index(){
-        return view('penduduk.index');
+        $pendudukTemplate = MDb::getFirstTypeName('template','penduduk');
+        if($pendudukTemplate == null){
+            $pendudukTemplate = array();
+        }
+        else{
+            $pendudukTemplate = $pendudukTemplate->data->template;
+        }
+        return view('penduduk.index',[
+          'pendudukTemplate'=>$pendudukTemplate
+        ]);
     }
 }
