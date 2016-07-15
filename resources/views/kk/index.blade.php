@@ -21,7 +21,7 @@ active
             <div class="row form-group">
               <div class='col-sm-12'>
                 <label>Nomor Kartu Keluarga</label>
-                <input type='text' name='nomor'/>
+                <input type='text' name='name'/>
               </div>
             </div>
             <div class="row form-group">
