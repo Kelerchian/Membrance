@@ -4,79 +4,173 @@ active
 @endsection
 @section('head.after')
   <link rel="stylesheet" href="{{ url('style/cleantable.css') }}"/>
+  <link rel="stylesheet" href="{{ url('style/specific/kk/index.css')}}" />
 @endsection
 @section('content')
   <div class='container'>
-      <h4>Daftar Kartu Keluarga</h4>
-      <div vile-weave='form'>
-      </div>
-      <div class='table-page' vile-weave='tablePagesTop'>
-      </div>
-      <div class='overflow-x'>
-        <table class='clean-table important' vile-weave='table'>
-          <thead>
-            <tr>
-              <th colspan="{{14+count($kkTemplate)}}" class='buttons float-left'>
-                <a href="{{ route('kk.add') }}"><span class='glyphicon glyphicon-plus'></span> Daftarkan Kartu Keluarga
-                </a>
-              </th>
-            </tr>
-            <tr>
-              <th data-sorter="id">
-                No
-              </th>
-              <th data-sorter="nomor">
-                Nomor KK
-              </th>
-              <th data-sorter="nama_kepala_keluarga">
-                Kepala Keluarga
-              </th>
-              <th data-sorter="alamat">
-                Alamat
-              </th>
-              <th data-sorter="rt">
-                RT
-              </th>
-              <th data-sorter="rw">
-                RW
-              </th>
-              <th data-sorter="desa">
-                Desa
-              </th>
-              <th data-sorter="kelurahan">
-                Kelurahan
-              </th>
-              <th data-sorter="kecamatan">
-                Kecamatan
-              </th>
-              <th data-sorter="kabupaten">
-                Kabupaten
-              </th>
-              <th data-sorter="kota">
-                Kota
-              </th>
-              <th data-sorter="kode pos">
-                Kode Pos
-              </th>
-              <th data-sorter="provinsi">
-                Provinsi
-              </th>
-              @foreach($kkTemplate as $template)
-              <th data-sorter="{{$template->name}}">
-                {{$template->name}}
-              </th>
-              @endforeach
-              <th>
-                Action
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-          </tbody>
-        </table>
-      </div>
-      <div class='table-page' vile-weave='tablePagesBottom'>
-      </div>
+    <h4>Daftar Kartu Keluarga</h4>
+    <a href="#" onclick="page.form.toggle(event)">advanced search</a>
+    <div class='row'>
+      <form class='col-md-12 display-none' vile-weave='form' onsubmit="page.form.submit(event)">
+          <div class="row">
+            <div class='col-sm-12 text-right'>
+              <button type="submit">Cari</button>
+            </div>
+          </div>
+          <div class="row form-group">
+            <div class='col-sm-12'>
+              <label>Nomor Kartu Keluarga</label>
+              <input type='text' name='nomor'/>
+            </div>
+          </div>
+          <div class="row form-group">
+            <div class="col-sm-6">
+              <div class='row form-group'>
+                <div class='col-sm-12'>
+                  <label>Nama Kepala Keluarga</label>
+                  <input list='datalist-kepala' type='text' name='nama_kepala_keluarga'/>
+                </div>
+              </div>
+              <div class='row form-group'>
+                <div class='col-sm-12'>
+                  <label>Alamat</label>
+                  <input type='text' name='alamat'/>
+                </div>
+              </div>
+              <div class='row form-group'>
+                <div class='col-sm-6'>
+                  <label>RT</label>
+                  <input type='number' min="0" name='rt'/>
+                </div>
+                <div class='col-sm-6'>
+                  <label>RW</label>
+                  <input type='number' min="0" name='rw'/>
+                </div>
+              </div>
+              <div class='row form-group'>
+                <div class='col-sm-6'>
+                  <label>Desa</label>
+                  <input type='text' name='desa'/>
+                </div>
+                <div class='col-sm-6'>
+                  <label>Kelurahan</label>
+                  <input type='text' name='kelurahan'/>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class='row form-group'>
+                <div class='col-sm-12'>
+                  <label>Kecamatan</label>
+                  <input type='text' name='kecamatan'/>
+                </div>
+              </div>
+              <div class='row form-group'>
+                <div class='col-sm-6'>
+                  <label>Kabupaten</label>
+                  <input type='text' name='kabupaten'/>
+                </div>
+                <div class='col-sm-6'>
+                  <label>Kota</label>
+                  <input type='text' name='kota'/>
+                </div>
+              </div>
+              <div class='row form-group'>
+                <div class='col-sm-12'>
+                  <label>Kode Pos</label>
+                  <input type='text' name='kode_pos' pattern="\d*"/>
+                </div>
+              </div>
+              <div class='row form-group'>
+                <div class='col-sm-12'>
+                  <label>Provinsi</label>
+                  <input type='text' name='provinsi'/>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class='row'>
+            <div class='col-md-12'>
+              <h4>Data Tambahan</h4>
+              <div class='row'>
+                @foreach($kkTemplate as $template)
+                  <div class='col-sm-6'>
+                    <label>{{ $template->name }}</label>
+                    <input type='{{ $template->type }}' name='{{ $template->name }}'/>
+                  </div>
+                @endforeach
+              </div>
+            </div>
+          </div>
+      </form>
+    </div>
+    <div class='pageno-container' vile-weave='tablePagesTop'>
+    </div>
+    <div class='overflow-x'>
+      <table class='clean-table important' vile-weave='table'>
+        <thead>
+          <tr>
+            <th colspan="{{14+count($kkTemplate)}}" class='buttons float-left'>
+              <a href="{{ route('kk.add') }}"><span class='glyphicon glyphicon-plus'></span> Daftarkan Kartu Keluarga
+              </a>
+            </th>
+          </tr>
+          <tr>
+            <th data-sorter="id">
+              No
+            </th>
+            <th data-sorter="nomor">
+              Nomor KK
+            </th>
+            <th data-sorter="nama_kepala_keluarga">
+              Kepala Keluarga
+            </th>
+            <th data-sorter="alamat">
+              Alamat
+            </th>
+            <th data-sorter="rt">
+              RT
+            </th>
+            <th data-sorter="rw">
+              RW
+            </th>
+            <th data-sorter="desa">
+              Desa
+            </th>
+            <th data-sorter="kelurahan">
+              Kelurahan
+            </th>
+            <th data-sorter="kecamatan">
+              Kecamatan
+            </th>
+            <th data-sorter="kabupaten">
+              Kabupaten
+            </th>
+            <th data-sorter="kota">
+              Kota
+            </th>
+            <th data-sorter="kode pos">
+              Kode Pos
+            </th>
+            <th data-sorter="provinsi">
+              Provinsi
+            </th>
+            @foreach($kkTemplate as $template)
+            <th data-sorter="{{$template->name}}">
+              {{$template->name}}
+            </th>
+            @endforeach
+            <th>
+              Action
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+        </tbody>
+      </table>
+    </div>
+    <div class='pageno-container' vile-weave='tablePagesBottom'>
+    </div>
   </div>
   <div id="repo">
     <div class="listUrl">
@@ -94,13 +188,32 @@ active
   $(document).ready(function(){
     AppGlobal.initialize(page)
     Vile.initialize(page)
+    page.form.toggle = function(){
+      page.form.toggleClass('display-none')
+    }
+    page.form.undisplay = function(){
+      page.form.addClass('display-none')
+    }
+    page.form.submit = function(e){
+      e.preventDefault()
+      page.list.get();
+    }
     page.kkTemplate = JSON.parse(page.repo.kkTemplate)
     page.list = {}
     page.list.kk = []
     page.list.get = function(){
+      var query = []
+      page.form.find('input[name]').each(function(){
+        var name = $(this).attr('name')
+        var value = $(this).val()
+        if(value.trim().length > 0){
+          query.push([name,'like',value])
+        }
+      })
       AppGlobal.ajax.json({
         url:page.repo.listUrl,
         method:'get',
+        data:{query:JSON.stringify(query)},
         success: function(data){
           page.list.kk = data.data
           page.list.refresh();
