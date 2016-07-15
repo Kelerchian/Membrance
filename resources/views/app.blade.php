@@ -15,7 +15,8 @@
 <body>
   <div class="container-fluid">
     <div class='row app-header'>
-        <a href="{{ route('index')}}" class="col-md-4">
+      <nav class="col-md-5">
+        <a href="{{ route('index')}}">
           <div class='app-title'>
             Data Warga Dusun
           </div>
@@ -23,12 +24,12 @@
             <span class='app-title-dusun'>{{ config('kk.nama_dusun') }}</span>, <span class="app-title-desa">{{ config('kk.nama_desa') }}</span>
           </div>
         </a>
-        <nav class="col-md-8">
-          <a href="{{ route('kk.index') }}" class="@yield('nav_kartu_keluarga')">Kartu Keluarga</a>
-          <a class="@yield('nav_penduduk')" href="{{ route('penduduk.index') }}">Penduduk</a>
-          <a class="@yield('nav_rt_rws')" href="#">RT/RW</a>
-          <a class="@yield('nav_template')" href="{{ route('template.index') }}">Template Penduduk</a>
-        </nav>
+      </nav>
+      <nav class="col-md-7">
+        <a href="{{ route('kk.index') }}" class="@yield('nav_kartu_keluarga')">Kartu Keluarga</a>
+        <a class="@yield('nav_penduduk')" href="{{ route('penduduk.index') }}">Penduduk</a>
+        <a class="@yield('nav_template')" href="{{ route('template.index') }}">Template Penduduk</a>
+      </nav>
     </div>
   </div>
   @include('globalmessage')

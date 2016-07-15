@@ -46,6 +46,11 @@ Route::post('/kk/edit/{id}',[
   'uses'=>'KKController@update'
 ]);
 
+Route::post('/kk/delete/{id}',[
+  'as'=>'kk.delete',
+  'uses'=>'KKController@deleteKK'
+]);
+
 Route::get('/penduduk',[
     'as'=>'penduduk.index',
     'uses'=>'PendudukController@index'

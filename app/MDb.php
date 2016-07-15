@@ -124,6 +124,11 @@ class MDb extends Model
       MRelation::where('name',$name)->where('from',$from)->where('to',$to)->delete();
       return true;
     }
+    private static function purgeRelationById($id){
+      MRelation::where('from',$id)->delete();
+      MRelation::where('to',$id)->delete();
+      return true;
+    }
     public static function purgeRelationFrom($name,$from){
       MRelation::where('name',$name)->where('from',$from)->delete();
       return true;
@@ -231,19 +236,16 @@ class MDb extends Model
     }
     public static function remove($id){
       try{
-
         MDb::removeAttr($id);
+        MDb::purgeRelationById($id);
         MObject::where('id',$id)->delete();
         return $id;
       }catch(\Exception $e){
-
         throw $e;
       }
     }
     public static function removeWhere($whereClauses){
       try{
-
-
         $objects = MDb::getWhere($whereClauses);
         $ids = array();
         foreach($objects as $object){

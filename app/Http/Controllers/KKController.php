@@ -68,9 +68,7 @@ class KKController extends Controller
 
     $kk = MDb::getFirstTypeId('kk',$id);
     if($kk == null){
-      return redirect(route('kk.index'))->with([
-        'errors'=>['Halaman yang anda cari tidak ditemukan']
-      ]);
+      throw new \Exception('Halaman yang anda cari tidak ditemukan');
     }
     $kk->data = $kkData->data;
     $penduduk = json_decode($input['penduduk']);
@@ -126,6 +124,23 @@ class KKController extends Controller
       }
       $data['message'] = 'Berhasil mendaftarkan kartu keluarga.';
       return $data;
+    });
+  }
+  public function deleteKK(Request $request, $id){
+    return Protocol::transaction(function()use($id){
+      $kk = MDb::getFirstTypeId('kk',$id);
+      if($kk == null){
+        throw new \Exception('Halaman yang anda cari tidak ditemukan');
+      }
+      $penduduk = MDb::getTos('kk-penduduk',$id);
+      foreach ($penduduk as $sPenduduk) {
+        MDb::remove($sPenduduk->id);
+      }
+      MDb::remove($kk->id);
+      MDb::purgeRelationFrom('kk-penduduk',$kk->id);
+      $ret = array();
+      $ret['message'] = 'berhasil menghapus kk dengan nomor:'.$kk->name;
+      return $ret;
     });
   }
 }

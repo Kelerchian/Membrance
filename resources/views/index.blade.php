@@ -7,13 +7,6 @@
     <h1 class='text-center'>
       Selamat Datang
     </h1>
-    <p class="text-center">
-      /deskripsi/
-      <br />
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin at est ex. Duis lectus libero, feugiat id rutrum eu, dapibus ac mauris. Nulla facilisi. Etiam mollis nulla at nisl ultricies viverra. Suspendisse dictum eget erat at cursus. Vestibulum consequat vulputate laoreet. Curabitur ornare nulla quam, id semper justo luctus vitae. Aliquam iaculis tincidunt ultrices. Nullam maximus augue sapien, at ultricies odio pellentesque sed.
-      <br />
-      /deskripsi/
-    </p>
     <div class='row cards important'>
       <div class='col-md-4 text-center'>
         <a href="{{ route('kk.index') }}">
@@ -24,7 +17,7 @@
         </a>
       </div>
       <div class='col-md-4 text-center'>
-        <a href="#">
+        <a href="{{ route('penduduk.index') }}">
           <h4>Penduduk</h3>
           <p class='description'>
               Lihat dan cari daftar penduduk
@@ -32,10 +25,10 @@
         </a>
       </div>
       <div class='col-md-4 text-center'>
-        <a href="#">
-          <h4>RT/RW</h3>
+        <a href="{{ route('template.index') }}">
+          <h4>Template</h3>
           <p class='description'>
-            Lihat dan cari data berdasarkan RT dan RW
+            Memanage template
           </p>
         </a>
       </div>

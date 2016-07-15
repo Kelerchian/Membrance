@@ -253,7 +253,7 @@ active
       for(var i = 0; i<kk.length; i++){
         body+=page.e.make('tr',{},(
           page.e.make('td',{'data-sorter':'id','data-ori':kk[i].id},i+1)
-          +page.e.make('td',{'data-sorter':'name','data-ori':kk[i].name},kk[i].name)
+          +page.e.make('td',{'data-sorter':'nomor','data-ori':kk[i].name},kk[i].name)
           +page.e.make('td',{'data-sorter':'nama_kepala_keluarga','data-ori':kk[i].data.nama_kepala_keluarga},kk[i].data.nama_kepala_keluarga)
           +page.e.make('td',{'data-sorter':'alamat','data-ori':kk[i].data.alamat},kk[i].data.alamat)
           +page.e.make('td',{'data-sorter':'rt','data-ori':kk[i].data.rt},kk[i].data.rt)

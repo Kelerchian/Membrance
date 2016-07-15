@@ -12,6 +12,13 @@ active
       <form onsubmit="page.list.submit(event)" vile-weave='form'>
         <div class="row">
           <div class='col-sm-12 text-right'>
+            <div vile-weave="deleteAlert" style="display: none;">
+              <p>
+                Tekan tombol Hapus Kartu Keluarga lagi untuk menghapus. Hati-hati, setelah dihapus tidak bisa dikembalikan lagi.
+                <br />
+              </p>
+            </div>
+            <button type='button' onclick="page.triggerDelete(event,this)" vile-weave="deleteButton">&times; Hapus Kartu Keluarga</button>
             <button type="submit">Simpan</button>
           </div>
         </div>
@@ -210,11 +217,17 @@ active
     <div class='submitUrl'>
       {{ route('kk.edit',$kk->id) }}
     </div>
+    <div class='indexUrl'>
+      {{ route('kk.index') }}
+    </div>
     <div class='dataPenduduk'>
       {{ json_encode($penduduk) }}
     </div>
     <div class='pendudukTemplate'>
       {{ json_encode($pendudukTemplate) }}
+    </div>
+    <div class='deleteUrl'>
+      {{ route('kk.delete',$kk->id) }}
     </div>
   </div>
   <script>
@@ -383,6 +396,26 @@ active
           page.e.make('td',page.e.make('input',{value:obj.data.ibu, type:'text',list:'datalist-ibu','data-name':'ibu'}))+
           page.list.fromTemplateLoad(obj)
         ))
+      }
+      page.triggerDelete = function(event,element){
+        if($(element).hasClass('deletable')){
+          AppGlobal.ajax.json({
+            method: 'post',
+            url: page.repo.deleteUrl,
+            success: function(data){
+              AppGlobal.storage.store('success',data.message)
+              window.location = page.repo.indexUrl
+            },
+            error: AppGlobal.ajax.ajaxError
+          })
+        }else{
+          $(element).addClass('deletable')
+          page.deleteAlert.show();
+          setTimeout(function(){
+            $(element).removeClass('deletable')
+            page.deleteAlert.hide();
+          },5000)
+        }
       }
       page.list.load = function(){
         var penduduk = JSON.parse(page.repo.dataPenduduk)

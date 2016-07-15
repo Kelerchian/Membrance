@@ -17,9 +17,6 @@ class MObject extends Model
   public function attr(){
     return $this->hasMany('App\MAttribute');
   }
-  public function where(&$whereClause){
-    return MDb::where($this,$whereClause);
-  }
   public function getData(){
     MDb::getData($this);
   }

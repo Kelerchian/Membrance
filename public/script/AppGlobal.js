@@ -109,7 +109,7 @@ AppGlobal.ajax.html = function(object){
         AppGlobal.postMessage('danger',e.responseText)
       }
       else{
-        AppGLobal.postMessage('danger','Terjadi kesalahan pada sistem')
+        AppGlobal.postMessage('danger','Terjadi kesalahan pada sistem')
       }
     }
   })
@@ -150,7 +150,7 @@ AppGlobal.ajax.json = function(object){
         AppGlobal.postMessage('danger',e.responseText)
       }
       else{
-        AppGLobal.postMessage('danger','Terjadi kesalahan pada sistem')
+        AppGlobal.postMessage('danger','Terjadi kesalahan pada sistem')
       }
     }
   })
@@ -232,7 +232,6 @@ AppGlobal.sorter.sort = function(th,table){
     else{
       comparator = 0
     }
-    console.log(va,comparator,vb)
     return comparator * (desc ? -1 : 1)
   }).appendTo($(table).find('tbody'))
   if(table.paginated){

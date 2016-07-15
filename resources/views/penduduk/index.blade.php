@@ -291,8 +291,8 @@ $(document).ready(function(){
     }
     if(penduduk.length == 0){
       body+=page.e.make('tr',
-        (page.e.make('td',{colspan:5,class:'text-center'},'belum ada kartu keluarga yang terdaftar'))+
-        (page.e.make('td',{colspan:page.pendudukTemplate.length+9,class:'text-center'},'belum ada kartu keluarga yang terdaftar'))
+        (page.e.make('td',{colspan:5,class:'text-center'},'belum ada penduduk yang terdaftar'))+
+        (page.e.make('td',{colspan:page.pendudukTemplate.length+9,class:'text-center'},'belum ada penduduk yang terdaftar'))
       )
     }
     page.table.find('tbody').html(body)
