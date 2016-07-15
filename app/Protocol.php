@@ -7,6 +7,7 @@ use DB;
 
 class Protocol extends Model
 {
+    public static $debugMode = false;
     public static function ajax($func){
       $ret = array();
       try{
@@ -34,7 +35,11 @@ class Protocol extends Model
       }catch(\Exception $e){
         DB::rollBack();
         $ret['stackTrace'] = $e->getTraceAsString();
-        $ret['message'] = $e->getMessage().' in '.$e->getFile().' at line '.$e->getLine();
+        if(Protocol::$debugMode === true){
+          $ret['message'] = $e->getMessage().' in '.$e->getFile().' at line '.$e->getLine();
+        }else{
+          $ret['message'] = $e->getMessage();
+        }
         $ret['status'] = 0;
       }
       return json_encode($ret);
