@@ -118,6 +118,19 @@ active
       page.template.refreshPenduduk();
     }
     page.template.addInput = function(templateObj){
+      var optionsText = {value:'text'}
+      var optionsNumber = {value:'number'}
+      var optionsDate = {value:'date'}
+      if(templateObj.type=='text'){
+        optionsText.selected = true
+      }
+      if(templateObj.type=='number'){
+        optionsNumber.selected = true
+      }
+      if(templateObj.type=='date'){
+        optionsDate.selected = true
+      }
+
       return (
         page.e.make('div',{class:'row field-row'},(
           page.e.make('div',{class:'col-xs-2'},(
@@ -127,10 +140,10 @@ active
             page.e.make('input',{value:templateObj.name,type:'text',placeholder:'Nama field'})
           ))+
           page.e.make('div',{class:'col-xs-4'},(
-            page.e.make('select',{value:templateObj.type},(
-              page.e.make('option',{value:'text'},'text')+
-              page.e.make('option',{value:'number'},'number')+
-              page.e.make('option',{value:'date'},'date')
+            page.e.make('select',(
+              page.e.make('option',optionsText,'text')+
+              page.e.make('option',optionsNumber,'number')+
+              page.e.make('option',optionsDate,'date')
             ))
           ))
         ))

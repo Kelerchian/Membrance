@@ -249,7 +249,7 @@ active
       for(var i = 0; i<page.kkTemplate.length; i++){
         var value = obj.data[page.kkTemplate[i].name] || ''
         var printval = (page.kkTemplate[i].type == 'date' && value!='' ? dateEx.print(value):value)
-        body+=page.e.make('td',{'data-sorter':page.kkTemplate[i],'data-ori':value},value)
+        body+=page.e.make('td',{'data-sorter':page.kkTemplate[i],'data-ori':value},printval)
       }
       return body
     }

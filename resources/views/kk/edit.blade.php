@@ -187,7 +187,7 @@ active
               @foreach($kkTemplate as $template)
                 <div class='col-sm-6'>
                   <label>{{ $template->name }}</label>
-                  <input value="{{ $kk->data->{$template->name} }}" type='{{ $template->type }}' name='{{ $template->name }}'/>
+                  <input value="{{ (isset($kk->data->{$template->name}) ? isset($kk->data->{$template->name}):'') }}" type='{{ $template->type }}' name='{{ $template->name }}'/>
                 </div>
               @endforeach
             </div>
