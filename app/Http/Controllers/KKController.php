@@ -22,10 +22,12 @@ class KKController extends Controller
       'kkTemplate'=>$kkTemplate
     ]);
   }
-  public function getList(){
-    return Protocol::ajax(function(){
+  public function getList(Request $request){
+    $input = $request->all();
+    $query = json_decode($request['query']);
+    return Protocol::ajax(function()use($query){
       $ret = array();
-      $ret['data'] = MDb::getType('kk');
+      $ret['data'] = MDb::getTypeWhere('kk',$query);
       $ret['message'] = 'berhasil mengambil data';
       return $ret;
     });

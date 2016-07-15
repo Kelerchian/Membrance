@@ -449,7 +449,7 @@ class MDb extends Model
         return $comparable->{$whereObj->attribute}!=$whereObj->value;
       }
       else if($whereObj->relation == 'like' || $whereObj->relation == 'like'){
-        return strpos($comparable->{$whereObj->attribute},$whereObj->value)!==false;
+        return strpos(strtolower($comparable->{$whereObj->attribute}),strtolower($whereObj->value))!==false;
       }
     }
     private static function singleWhere(&$object, &$whereClauses){
