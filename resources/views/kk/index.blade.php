@@ -119,15 +119,13 @@ active
     </div>
     <div class='pageno-container' vile-weave='tablePagesTop'>
     </div>
+    <div>
+        <a href="{{ route('kk.add') }}"><span class='glyphicon glyphicon-plus'></span> Daftarkan Kartu Keluarga
+        </a>
+    </div>
     <div class='overflow-x'>
       <table class='clean-table important' vile-weave='table'>
         <thead>
-          <tr>
-            <th colspan="{{16+count($kkTemplate)}}" class='buttons float-left'>
-              <a href="{{ route('kk.add') }}"><span class='glyphicon glyphicon-plus'></span> Daftarkan Kartu Keluarga
-              </a>
-            </th>
-          </tr>
           <tr>
             <th data-sorter="id">
               No
