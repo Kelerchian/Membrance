@@ -1,8 +1,8 @@
 <?php
 
 return [
-  'nama_desa'=>'Demangrejo',
-  'nama_dusun'=>'Demangan',
-  'creator_header'=>'Dusun Demangan, Desa Demangrejo',
-  'company_header'=>'Dusun Demangan'
+  'nama_desa'=>'Sukoreno',
+  'nama_dusun'=>'Mertan',
+  'creator_header'=>'Dusun Mertan, Desa Sukoreno',
+  'company_header'=>'Dusun Mertan'
 ];
