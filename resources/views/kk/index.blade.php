@@ -10,6 +10,8 @@ active
       <h4>Daftar Kartu Keluarga</h4>
       <div vile-weave='form'>
       </div>
+      <div class='table-page' vile-weave='tablePagesTop'>
+      </div>
       <div class='overflow-x'>
         <table class='clean-table important' vile-weave='table'>
           <thead>
@@ -73,6 +75,8 @@ active
           </tbody>
         </table>
       </div>
+      <div class='table-page' vile-weave='tablePagesBottom'>
+      </div>
   </div>
   <div id="repo">
     <div class="listUrl">
@@ -100,6 +104,16 @@ active
         success: function(data){
           page.list.kk = data.data
           page.list.refresh();
+          AppGlobal.sorter.activate(page.table)
+          AppGlobal.sorter.paginate(page.table,function(pageNo,currentPageNo){
+            var pageBullets = ''
+            for(var i = 1; i<=pageNo; i++){
+              pageBullets+=page.e.make('a',{onclick:'page.table.switchPage(event,'+i+')',class:'pageno'+(i==currentPageNo?' active':'')},i)
+            }
+            page.tablePagesTop.html(pageBullets)
+            page.tablePagesBottom.html(pageBullets)
+
+          })
         }
       })
     }
@@ -141,7 +155,6 @@ active
       page.table.find('tbody').html(body)
     }
     page.list.get();
-    AppGlobal.sorter.activate(page.table)
   })
   </script>
 @endsection

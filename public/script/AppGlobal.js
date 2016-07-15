@@ -156,6 +156,48 @@ AppGlobal.ajax.json = function(object){
   })
 }
 AppGlobal.sorter = {}
+AppGlobal.sorter.paginate = function(table,pageNoSpawner){
+  var i = 0;
+  var j = 1;
+  var max = $(table).data('maxitem')
+  if(!max){
+    $(table).data('maxitem',10)
+    max = 10;
+  }
+  $(table).find('tbody tr').each(function(){
+    $(this).attr('data-page',j)
+    if(j==1){
+      $(this).show();
+    }
+    else{
+      $(this).hide();
+    }
+    i++
+    if(i>=max){
+      j++
+      i=0
+    }
+  })
+  table.pageNo = j
+  if(pageNoSpawner){
+    table.pageNoSpawner = pageNoSpawner
+  }
+  if(table.pageNoSpawner){
+    table.pageNoSpawner(table.pageNo,1)
+  }
+  table.paginated = true
+  table.switchPage = function(e,pageno){
+    e.preventDefault();
+    AppGlobal.sorter.switchPage(table,pageno)
+  }
+}
+AppGlobal.sorter.switchPage = function(table,i){
+  $(table).find('tbody tr').hide();
+  $(table).find('tbody tr[data-page='+i+']').show();
+  if(table.pageNoSpawner){
+    table.pageNoSpawner(table.pageNo,i)
+  }
+}
 AppGlobal.sorter.activate = function(table){
   $(table).find('thead th[data-sorter]').addClass('clickable').click(function(){
     AppGlobal.sorter.sort(this,table)
@@ -165,7 +207,6 @@ AppGlobal.sorter.sort = function(th,table){
   var attribute = $(th).data('sorter')
   $(table).find('tbody tr').each(function(){
     var value = $(this).find('td[data-sorter="'+attribute+'"]').data('ori')
-    console.log($(this).find('td[data-sorter="'+attribute+'"]'),value)
     $(this).data('ori',value)
   })
 
@@ -194,4 +235,7 @@ AppGlobal.sorter.sort = function(th,table){
     console.log(va,comparator,vb)
     return comparator * (desc ? -1 : 1)
   }).appendTo($(table).find('tbody'))
+  if(table.paginated){
+    AppGlobal.sorter.paginate(table)
+  }
 }

@@ -156,6 +156,19 @@ button:hover{
   font-weight: 500;
 }
 
+.pageno{
+  display: inline-block;
+  padding: 3px;
+  border: 1px solid #bb8;
+  min-width: 2em;
+  text-align: center;
+  cursor: pointer;
+}
+
+.pageno:hover{
+  background: rgba(0,0,0,0.1);
+}
+
 .app-header>nav{
   height: 100%;
   margin-top: auto;
