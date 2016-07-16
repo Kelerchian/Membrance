@@ -1,5 +1,5 @@
 AppGlobal = {}
-AppGlobal.debugMode = true
+AppGlobal.debugMode = false
 AppGlobal.initialize = function(page){
   $.ajaxSetup({
   	headers: {
